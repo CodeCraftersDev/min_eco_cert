@@ -1,9 +1,10 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-        <img src="<?=base_url('adminlte/dist/img/')?>AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <a href="<?= base_url('admin') ?>" class="brand-link bg-dark">
+        <img src="<?=base_url('assets/img/')?>jaguarete.png" alt="Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .9;  max-height: 40px; background-color: #106951;">
+        <span class="brand-text font-weight-light">Ecología</span>
     </a>
 
     <!-- Sidebar -->
