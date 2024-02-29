@@ -7,6 +7,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->post('/validate', 'Home::validatedni');
+$routes->get('/certificado', 'Certificados::certificadoNoRegistra');
+$routes->get('/certificadoregistra', 'Certificados::certificadoRegistra');
 
 //admin
 $routes->get('admin', [AdminController::class, 'index']);
