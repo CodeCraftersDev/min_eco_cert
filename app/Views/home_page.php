@@ -29,14 +29,80 @@
 <div class="wrapper">
     <div class="header-menu">
         <div class="container band">
-            <div class="logo">
-                <img src="<?=base_url('assets/img/')?>eco_logo.png" alt="Ministerio de Ecología">
-            </div>
-            <ul class="menu">
-                <li><a href="https://ecologia.misiones.gob.ar/">Inicio</a></li>
-                <li><a href="https://ecologia.misiones.gob.ar/corredor-verde/">Corredor verde</a></li>
-                <li><a href="https://ecologia.misiones.gob.ar/ecologia-te-escucha/">Ecología te escucha</a></li>
-            </ul>
+            <nav class="navbar navbar-expand-lg">
+                <div class="top-logo">
+                    <div class="logo navbar-brand">
+                        <a href="https://ecologia.misiones.gob.ar" target="_blank">
+                            <img src="<?=base_url('assets/img/')?>eco_logo.png" alt="Ministerio de Ecología">
+                        </a>
+                    </div>
+                    <div class="hamburger_btn">
+                        <button
+                                class="navbar-toggler"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#navbarEcoContent"
+                                aria-controls="navbarEcoContent"
+                                aria-expanded="false"
+                                aria-label="Ecologia"
+                        >
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbarEcoContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://ecologia.misiones.gob.ar/autoridades/" target="_blank">Autoridades</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                Subs. de Ecología
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/biodiversidad/" target="_blank">Dirección de Biodiversidad</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/recursos-vitales/" target="_blank">Dirección de Recursos Vitales</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/areas-naturales-protegidas/" target="_blank">Dirección de Áreas Naturales Protegidas</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/impacto-ambiental/" target="_blank">Dirección de Impacto Ambiental</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/educacion-ambiental/" target="_blank">Educación Ambiental</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/parque-ecologico-el-puma/" target="_blank">Parque Ecológico EL PUMA</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/registro-de-meliponicultores-de-la-provincia/" target="_blank">Registro de Meliponicultores de la provincia</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                Subs. de Ord. Territorial
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/direccion-gral-de-planificacion-territorial/" target="_blank">Dirección Gral. de Planificación Territorial</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/direccion-gral-de-sistemas-de-informacion-geografica/" target="_blank">Dirección Gral. de Sistemas de Información Geográfica</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/direccion-gral-alerta-temprana/" target="_blank">Dirección Gral. de Alerta Temprana</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                Bosques Nativos
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="https://ecologia.misiones.gob.ar/departamento-de-promocion-de-bosques-nativos/">
+                                    Departamento de Promoción de Bosques Nativos
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://ecologia.misiones.gob.ar/corredor-verde/" target="_blank">Corredor Verde</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         </div>
     </div>
 
