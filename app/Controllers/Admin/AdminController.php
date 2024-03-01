@@ -19,8 +19,6 @@ class AdminController extends BaseController {
      * @return void
      */
     public function index() {
-//        session()->destroy();
-
         if ($this->Administrator->isLogged())
             return $this->_buildDash();
         else
@@ -44,7 +42,7 @@ class AdminController extends BaseController {
      * @return void
      */
     private function _buildDash() {
-        $this->viewdata['title'] = 'Min. Ecología';
+        $this->viewdata['title'] = 'Admin';
         $this->viewdata['section'] = 'Home';
         return view('admin/index', $this->viewdata);
     }
