@@ -8,7 +8,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->post('/validate', 'Home::validatedni');
-$routes->get('/certificado', 'Certificados::certificadoNoRegistra');
+$routes->get('/certificado/(:hash)', 'Certificados::certificadoNoRegistra/$1');
 $routes->get('/certificadoregistra', 'Certificados::certificadoRegistra');
 
 //admin

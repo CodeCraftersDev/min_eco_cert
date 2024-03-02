@@ -11,7 +11,7 @@ class Certificados extends BaseController
         return view('home_page');
     }
 
-    public function certificadoNoRegistra(){
+    public function certificadoNoRegistra($hash){
         define('K_PATH_IMAGES', base_url('assets/img/'));
         $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
         $pdf->SetCreator('Code Crafters');
