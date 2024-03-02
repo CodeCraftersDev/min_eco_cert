@@ -30,6 +30,8 @@
 </head>
 
 <body class="hold-transition login-page">
+  <img src="<?= base_url('assets/img/') ?>fondo_eco.png" class="blur-bg">
+
   <div class="login-box">
     <div class="login-logo ">
       <img src="<?= base_url('assets/img/')?>eco_logo.png">
@@ -37,24 +39,15 @@
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
-
+        <h5 class="login-box-msg">Bienvenido</h5>
         <form action="#" method="post">
-          <div class="input-group mb-3">
-            <input id="username" type="text" name="username" class="form-control" placeholder="Username">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
+          <div class="input-field mb-3">
+            <span class="far fa-user p-2"></span>
+            <input id="username" type="text" name="username" class="form-control form-control-sm" placeholder="Username">
           </div>
-          <div class="input-group mb-3">
-            <input id="password" type="password" name="password" class="form-control" placeholder="Password" autocomplete="off">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
+          <div class="input-field mb-3">
+            <span class="fas fa-lock p-2"></span>
+            <input id="password" type="password" name="password" class="form-control form-control-sm" placeholder="Password" autocomplete="off">
           </div>
           <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none">
             Datos ingresados no son correctos.
@@ -65,7 +58,7 @@
           <div class="row">
             <!-- /.col -->
             <div class="col">
-              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+              <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
             </div>
             <!-- /.col -->
           </div>

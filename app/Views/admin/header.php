@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= $title; ?> | <?= $section; ?> </title>
+    <title>Min. Ecología | <?= $title; ?></title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -30,9 +30,9 @@
 <div class="wrapper">
 
     <!-- Preloader -->
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="<?=base_url('adminlte/dist/img/')?>AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-    </div>
+    <!--    <div class="preloader flex-column justify-content-center align-items-center">-->
+    <!--        <img class="animation__shake" src="--><?php //=base_url('adminlte/dist/img/')?><!--AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">-->
+    <!--    </div>-->
 
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -44,12 +44,9 @@
         </ul>
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <!--  <li class="nav-item">
-                <span class="info nav-link"><?/*= $username */?></span>
-            </li>-->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    test
+                    <?= session('username') ?>
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <button type="button" id="btn-pass-change-modal" class="btn btn-light" data-toggle="modal" data-target="#pass-change-modal">
@@ -66,40 +63,27 @@
         </ul>
     </nav>
     <!-- /.navbar -->
-    <?= $this->renderSection('content');?>
-    <?= view('admin/sidebar') ?>
 
-    <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="https://ccdev.ar/">Code Crafters</a>.</strong>
-        All rights reserved.
-        <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 1.0
+    <!--  sidebarmenu  -->
+    <?= $this->include('admin/sidebar'); ?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0"><?= $title; ?></h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="<?= base_url('admin') ?>">Home</a></li>
+                            <li class="breadcrumb-item active">
+                                <a href="<?= base_url().uri_string() ?>"> <?= $title; ?></a></li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
         </div>
-    </footer>
-
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="<?=base_url('adminlte/plugins/jquery/')?>jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="<?=base_url('adminlte/plugins/jquery-ui/')?>jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
-<!-- Bootstrap 4 -->
-<script src="<?=base_url('adminlte/plugins/bootstrap/js/')?>bootstrap.bundle.min.js"></script>
-<!-- Summernote -->
-<script src="<?=base_url('adminlte/plugins/summernote/')?>summernote-bs4.min.js"></script>
-<!-- overlayScrollbars -->
-<script src="<?=base_url('adminlte/plugins/overlayScrollbars/js/')?>jquery.overlayScrollbars.min.js"></script>
-<!-- AdminLTE App -->
-<script src="<?=base_url('adminlte/dist/js/')?>adminlte.js"></script>
-</body>
-</html>
+        <!-- /.content-header -->

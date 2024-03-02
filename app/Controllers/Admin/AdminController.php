@@ -42,7 +42,7 @@ class AdminController extends BaseController {
      * @return void
      */
     private function _buildDash() {
-        $this->viewdata['title'] = 'Min. Ecología';
+        $this->viewdata['title'] = 'Admin';
         $this->viewdata['section'] = 'Home';
         return view('admin/index', $this->viewdata);
     }
@@ -54,7 +54,7 @@ class AdminController extends BaseController {
      */
     public function login(): object {
         $username = $this->request->getVar('username');
-        $password = base64_decode($this->request->getVar('password'));
+        $password = $this->request->getVar('password');
 
         // Verificar usuario en la BD
         try{
@@ -90,11 +90,13 @@ class AdminController extends BaseController {
      */
     private function verifyPass(string $username, $password ): bool {
 
+        $pw = base64_decode($password);
+
         try{
             $builder = $this->db->table('users');
             $query = $builder->select()
                 ->where('username',$username)
-                ->where('password',sha1($password))
+                ->where('password',sha1($pw))
                 ->get();
             $user = $query->getResultArray();
             return (bool)$user;
@@ -110,13 +112,11 @@ class AdminController extends BaseController {
      * @return void
      */
     public function logout() {
-        pre('logout');
-
         session()->remove('logged_in');
         session()->remove('userid');
         session()->remove('username');
         session()->remove('name');
         session()->destroy();
-        return redirect()->to('/login');
+        return redirect()->route('admin');
     }
 }
