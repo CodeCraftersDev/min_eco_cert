@@ -2,7 +2,7 @@
 <?= $this->section('content'); ?>
 
 <!-- Main content -->
-<section class="content table-list" id="communities-list">
+<section class="content table-list" id="summaries-list">
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
@@ -13,9 +13,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <div class="input-group">
+                                            <select name="type" class="form-control">
+                                                <option value="summary_id" <?= isset($_GET['type']) && !empty($_GET['type']) ? ($_GET['type'] == 'summary_id' ? 'selected'  : '') : ''?>>Sumario</option>
+                                                <option value="name" <?= isset($_GET['type']) && !empty($_GET['type']) ? ($_GET['type'] == 'name' ? 'selected'  : '') : ''?>>Nombre</option>
+                                            </select>
                                             <input type="search" name="search" id="search" class="form-control onlyalphanumeric" placeholder="Buscar..." value="<?= isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : ''?>">
                                             <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"></i></button>
+                                                <button class="btn btn-eco-primary-outline" type="submit"><i class="fas fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -24,7 +28,7 @@
                         </div>
                         <div class="card-tools">
                             <div class="float-right">
-                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-primary"><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
+                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-eco-primary"><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -35,22 +39,30 @@
                                 <table class="table table-hover text-nowrap with-sortable" data-sort="communities">
                                     <thead>
                                     <tr>
-                                        <th>Datos 1</th>
-                                        <th>Datos 2</th>
+                                        <th> Nro. Sumario </th>
+                                        <th> Carátula </th>
+                                        <th> Disposición </th>
+                                        <th> Titular </th>
+                                        <th> Origen </th>
+                                        <th> Destino </th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody class="sortable-row" data-axis="y">
-                                    <?php foreach ($summaries as $summary) { ?>
-                                        <?php foreach ($summary as $s) { ?>
-                                        <tr id="<?= $s['id'] ?>" >
-                                            <td><?= $s['name'] ?></td>
-                                            <td class="actions">
-                                                <a href="<?= base_url() ?>admin/summaries/<?= $s['id'] ?>/edit" class="edit"><i class="fas fa-cog"></i>
-                                                </a><button class="remove" data-name="<?= $s['name'] ?>" data-id="<?= $s['id'] ?>"><i class="far fa-trash-alt"></i></button>
-                                            </td>
-                                        </tr>
-                                    <?php } } ?>
+                                        <?php foreach ($summaries['summaries'] as $summary) : ?>
+                                            <tr id="<?= $summary->id ?>" >
+                                                <td><?= $summary->id ?></td>
+                                                <td><?= $summary->d_sumario ?></td>
+                                                <td><?= $summary->n_disposicion ?></td>
+                                                <td><?= $summary->denominacion ?></td>
+                                                <td><?= $summary->c_origen ?></td>
+                                                <td><?= $summary->c_destino ?></td>
+                                                <td class="actions">
+                                                    <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit" class="edit"><i class="far fa-edit"></i>
+                                                    </a><button class="remove" data-name="<?= $summary->denominacion ?>" data-id="<?= $summary->id ?>"><i class="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>

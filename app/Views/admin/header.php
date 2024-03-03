@@ -20,6 +20,9 @@
     <!-- summernote -->
     <link rel="stylesheet" href="<?=base_url('adminlte/plugins/summernote/')?>summernote-bs4.min.css">
 
+    <!-- Site style -->
+    <link rel="stylesheet" href="<?=base_url('assets/css/')?>admin-styles.min.css">
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('assets/img/') ?>favicon.jpg">
     <meta name="msapplication-TileColor" content="#004f9f">
@@ -45,20 +48,26 @@
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?= session('username') ?>
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="far fa-user"></i>
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <button type="button" id="btn-pass-change-modal" class="btn btn-light" data-toggle="modal" data-target="#pass-change-modal">
-                        Administrar Cuenta
-                    </button>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                    <div class="dropdown-divider"></div>
+                    <a href="<?= base_url() ?>admin/profile" class="dropdown-item">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    <?= session('username') ?>
+                                </h3>
+                                <p class="text-sm">Administrar mi cuenta</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="nav-link" href="<?= base_url() ?>admin/logout" role="button" data-toggle="tooltip"
+                       title="Cerrar sesión" data-placement="center"> Cerrar Sesión
+                    </a>
                 </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url() ?>admin/logout" role="button" data-toggle="tooltip"
-                   title="Cerrar sesión" data-placement="left">
-                    <i class="fas fa-power-off"></i>
-                </a>
             </li>
         </ul>
     </nav>

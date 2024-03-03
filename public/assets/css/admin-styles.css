@@ -1,0 +1,167 @@
+:root {
+    --eco-green: #106951;
+    --eco-green-disabled: rgba(24, 188, 144, 0.62);
+    --eco-green-hover: #074535;
+    --eco-black: #000000;
+    --color-black: #292929;
+    --color-white: var(--white);
+    --trans-white: rgba(255, 255, 255, .7);
+    --trans-black: rgba(0, 0, 0, .7);
+}
+
+.bg-dark {
+    background-color: var(--eco-black) !important;
+}
+
+[class*="sidebar-dark-"] {
+    background-color: var(--eco-black);
+}
+
+.sidebar-dark-lime .nav-sidebar > .nav-item > .nav-link.active,
+.sidebar-light-lime .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: var(--eco-green);
+    color: var(--white);
+}
+
+a {
+    color: var(--eco-green);
+    text-decoration: none;
+    background-color: transparent;
+}
+
+a:hover {
+    color: var(--green);
+    text-decoration: none;
+}
+
+.nav-pills .nav-link{
+    border-radius: 50px;
+}
+
+/* new buttons */
+.btn-eco-primary {
+    color: var(--white);
+    background-color: var(--eco-green);
+    border-color: var(--eco-green);
+    box-shadow: none;
+    border-radius: 50px;
+}
+
+.btn-eco-primary:hover {
+    color: var(--white);
+    background-color: var(--eco-green-hover);
+    border-color: var(--eco-green-hover);
+}
+
+.btn-eco-primary:focus, .btn-eco-primary.focus {
+    color: var(--white);
+    background-color: var(--eco-green-hover);
+    border-color: var(--eco-green-hover);
+    box-shadow: 0 0 0 0 rgba(24, 188, 144, 0.62);
+}
+
+.btn-eco-primary.disabled, .btn-eco-primary:disabled {
+    color: var(--white);
+    background-color: var(--eco-green-disabled);
+    border-color: var(--eco-green-disabled);
+}
+
+.btn-eco-primary:not(:disabled):not(.disabled):active, .btn-eco-primary:not(:disabled):not(.disabled).active,
+.show > .btn-eco-primary.dropdown-toggle {
+    color: var(--white);
+    background-color: var(--eco-green);
+    border-color: var(--eco-green);
+}
+
+.btn-eco-primary-outline {
+    color: var(--eco-green);
+    border-color: var(--eco-green);
+    border-radius: 50px;
+}
+
+.btn-eco-primary-outline:hover {
+    color: var(--white);
+    background-color: var(--eco-green);
+    border-color: var(--eco-green);
+}
+
+.btn-eco-primary-outline:focus, .btn-eco-primary-outline.focus {
+    box-shadow: 0 0 0 0 rgba(24, 188, 144, 0.62);
+}
+
+.btn-eco-primary-outline.disabled, .btn-eco-primary-outline:disabled {
+    color: var(--eco-green-disabled);
+    background-color: transparent;
+}
+
+.btn-eco-primary-outline:not(:disabled):not(.disabled):active, .btn-eco-primary-outline:not(:disabled):not(.disabled).active,
+.show > .btn-eco-primary-outline.dropdown-toggle {
+    color: var(--white);
+    background-color: var(--eco-green);
+    border-color: var(--eco-green);
+}
+
+.btn-eco-primary-outline:not(:disabled):not(.disabled):active:focus, .btn-eco-primary-outline:not(:disabled):not(.disabled).active:focus,
+.show > .btn-eco-primary-outline.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 rgba(24, 188, 144, 0.62);
+}
+
+
+.btn-eco-secondary-outline {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-eco-secondary-outline:hover {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-eco-secondary-outline:focus, .btn-eco-secondary-outline.focus {
+    box-shadow: 0 0 0 0 rgba(108, 117, 125, 0.5);
+}
+
+.btn-eco-secondary-outline.disabled, .btn-eco-secondary-outline:disabled {
+    color: #6c757d;
+    background-color: transparent;
+}
+
+.btn-eco-secondary-outline:not(:disabled):not(.disabled):active, .btn-eco-secondary-outline:not(:disabled):not(.disabled).active,
+.show > .btn-eco-secondary-outline.dropdown-toggle {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-eco-secondary-outline:not(:disabled):not(.disabled):active:focus, .btn-eco-secondary-outline:not(:disabled):not(.disabled).active:focus,
+.show > .btn-eco-secondary-outline.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 rgba(108, 117, 125, 0.5);
+}
+
+/* form tables */
+.table td.actions button.remove {
+    color: #fd5e5e;
+    background-color: transparent;
+    border: none;
+}
+
+.table td.actions button.remove:hover {
+    background: transparent;
+    color: #FF0000FF;
+}
+
+/* pagination */
+.page-link {
+    color: var(--eco-green);
+}
+
+.page-link:hover {
+    color: var(--eco-green-hover);
+    border-color: var(--eco-green-hover);
+}
+
+.page-item.active .page-link {
+    background-color: var(--eco-green);
+    border-color: var(--eco-green);
+}

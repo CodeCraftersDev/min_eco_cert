@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-navy elevation-4">
+<aside class="main-sidebar sidebar-dark-lime elevation-4">
     <!-- Brand Logo -->
     <a href="<?= base_url('admin') ?>" class="brand-link bg-dark">
         <img src="<?=base_url('assets/img/')?>jaguarete.png" alt="Logo" class="brand-image img-circle elevation-3"

@@ -4,6 +4,10 @@ use CodeIgniter\Model;
 
 class SumarioModel extends Model{
 
+    protected $sumario = 'sumarios';
+    protected $sumarioDet = 'sumarios_detalle';
+    protected $sumarioTitulares = 'sumarios_titulares';
+
     public function __construct(){
         parent::__construct();
         $this->db = \Config\Database::connect();
@@ -89,8 +93,85 @@ class SumarioModel extends Model{
             }
         }
         catch(\CodeIgniter\Database\Exceptions\DatabaseException $e){
+                throw new \RuntimeException($e->getMessage());
+        }
+    }
+
+    /**
+     * Get summary from database by ID.
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getById ($id) {
+        try {
+
+            $builder = $this->db->table($this->sumario.' s');
+            $query =  $builder->select('s.id, s.d_sumario,  sd.*')
+                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
+                ->where('s.id', $id)
+                ->get();
+
+            return $query->getRow();
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
             throw new \RuntimeException($e->getMessage());
         }
     }
 
+    /**
+     * Get summary involved from database by ID.
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getInvolved ($id) {
+        try {
+
+            $builder = $this->db->table($this->sumarioTitulares.' st');
+            $query =  $builder->select('st.*')
+                ->where('st.sumarios_id', $id)
+                ->get();
+
+            return $query->getResult();
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+    }
+
+    /**
+     * Get all data from database.
+     *
+     */
+    public function getAll ($filter = false, $perPage = 10) {
+
+        try {
+
+            // TODO: add filters!
+            //  if(is_array($filter) && !empty($filter)) {
+            //      if(isset($filter['search']) && !empty($filter['search'])) {
+            //          if($filter['type'] === 'name')
+            //              $query->like('st.denominacion', $filter['search']);
+            //          else
+            //              $query->where('s.id', $filter['search']);
+            //      }
+            //  }
+
+            $builder = $this->db->table($this->sumario.' s');
+            $query =  $builder->select('s.id, s.d_sumario, sd.n_disposicion, sd.c_origen, sd.c_destino, st.denominacion')
+                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
+                ->join($this->sumarioTitulares.' st', 's.id = st.sumarios_id')
+                ->where('st.titular', 'S')
+                ->get();
+
+            $result = $query->getResult();
+            $pager = null; //$query->paginate($perPage);
+
+            return [
+                'summaries' => $result,
+                'pager' => $pager
+            ];
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+    }
 }
