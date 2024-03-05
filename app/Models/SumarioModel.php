@@ -134,13 +134,22 @@ class SumarioModel extends Model{
         $query = $builder->select('id, referencia')
             ->where('hash', $hash)
             ->get();
-        $ret['cab'] = ($query->getResultArray())[0];
+        $cab = $query->getResultArray();
 
-        $builder = $this->db->table('certificados_det det');
-        $query = $builder->select('id_sumary, ubicacion_actual, estado_sumario, observaciones')
-            ->where('id_cert_cab', $ret['cab']['id'])
-            ->get();
-        $ret['det'] = $query->getResultArray();
+        if(count($cab) == 0){
+            $ret['cab'] = [];
+            $ret['det'] = [];
+        }
+        else{
+            $ret['cab'] = $cab[0];
+
+            $builder = $this->db->table('certificados_det det');
+            $query = $builder->select('id_sumary, ubicacion_actual, estado_sumario, observaciones')
+                ->where('id_cert_cab', $ret['cab']['id'])
+                ->get();
+            $ret['det'] = $query->getResultArray();
+        }
+
         return $ret;
     }
 
@@ -189,7 +198,7 @@ class SumarioModel extends Model{
      * Get all data from database.
      *
      */
-    public function getAll ($filter = false, $page, $perPage = 10) {
+    /*public function getAll ($filter = false, $page, $perPage = 10) {
 
         try {
 
@@ -223,5 +232,5 @@ class SumarioModel extends Model{
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
             throw new \RuntimeException($e->getMessage());
         }
-    }
+    }*/
 }
