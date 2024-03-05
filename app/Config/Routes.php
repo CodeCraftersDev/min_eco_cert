@@ -8,9 +8,9 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
-$routes->post('/validate', 'Home::validatedni');
-$routes->get('/certificado/(:hash)', 'Certificados::certificadoNoRegistra/$1');
-$routes->get('/certificadoregistra', 'Certificados::certificadoRegistra');
+$routes->post('/validatedni', 'Home::validatedni');
+$routes->get('/certificado/(:hash)', 'Certificados::certificado/$1');
+$routes->get('/validacert/(:hash)', 'Certificados::certificado/$1');
 
 //admin
 $routes->get('admin', [AdminController::class, 'index']);

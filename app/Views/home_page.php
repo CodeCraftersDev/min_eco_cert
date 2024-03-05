@@ -16,6 +16,8 @@
     <script src="<?=base_url('adminlte/plugins/jquery/')?>jquery.min.js"></script>
     <script src="<?=base_url('adminlte/plugins/popper/umd/')?>popper.min.js"></script>
     <script src="<?=base_url('adminlte/plugins/bootstrap/js/')?>bootstrap.min.js"></script>
+    <script src="<?=base_url('adminlte/plugins/jquery-validation/')?>jquery.validate.min.js"></script>
+    <script src="<?=base_url('adminlte/plugins/jquery-validation/')?>additional-methods.js"></script>
     <script type="application/javascript">
         const base_url = '<?=base_url()?>';
     </script>
@@ -53,6 +55,27 @@
 
             </circle>
     </svg>
+    </div>
+</div>
+
+<!-- Modals -->
+<div class="modal" tabindex="-1" role="dialog" id="modal-box">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="text-body"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="ok" type="button" class="btn btn-primary">Aceptar</button>
+                <button id="nook" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -145,15 +168,34 @@
                 laboriosam ipsum.</p>
         </div>
         <div class="row form">
-            <form action="">
+            <form id="formid" action="">
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Nombre</div>
+                            </div>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Apellido</div>
+                            </div>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-row align-items-center">
                     <div class="col-auto">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">D.N.I.</div>
                             </div>
-                            <input type="text" class="form-control" id="dni_number"
-                                   placeholder="Número de Documento">
+                            <input type="text" class="form-control" id="dni_number" name="dni_number" placeholder="Número de Documento" required>
                         </div>
                     </div>
                 </div>

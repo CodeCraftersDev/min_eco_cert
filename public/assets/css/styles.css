@@ -175,6 +175,7 @@ body {}
 }
 /** MENU */
 
+/** FORMULARIO PAGINA PRINCIPAL */
 .form-wrapper h1 {
     color: var(--color-white);
 }
@@ -186,11 +187,21 @@ body {}
 .form-wrapper .form {
     padding: 10px 0px;
 }
+#formid .form-control.error{
+    border: 1px solid red;
+}
+#formid .input-group label.error{
+    color: white;
+    margin: 6px 0px 6px 6px;
+    text-shadow: 1px 0px 4px red, -1px 0px 3px red;
+}
 
 .btn.btn-light {
     padding-left: 20px;
     padding-right: 20px;
 }
+
+/** FIN FORMULARIO*/
 
 footer {
     background-color: var(--color-black);

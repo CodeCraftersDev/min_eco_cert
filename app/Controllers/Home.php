@@ -14,11 +14,13 @@ class Home extends BaseController
         try{
             $resp = array();
             $dni = $this->request->getPost('dni');
+            $nombre = $this->request->getPost('nombre');
+            $apellido = $this->request->getPost('apellido');
 
             $model = new SumarioModel();
             $arr = $model->searchSumaryByDNI($dni);
             if(count($arr) == 0){/** no se encontro dni mandarlo a no registrado */
-                $hash = $model->generarCertificado($dni, $arr, true);
+                $hash = $model->generarCertificado($nombre, $apellido, $dni, $arr, 1);
                 $resp = [
                     'url' => base_url('certificado/'.$hash[0]['hash']),
                     'message' => 'No se ha encontrado registrado su DNI en Sumarios',
@@ -26,10 +28,9 @@ class Home extends BaseController
                 ];
             }
             else{
-                $hash = $model->generarCertificado($dni, $arr, false);
+                $hash = $model->generarCertificado($nombre, $apellido, $dni, $arr, 0);
                 $resp = [
-                    'hash' => $hash,
-                    'url' => base_url('certificadoregistra'),
+                    'url' => base_url('certificado/'.$hash[0]['hash']),
                     'message' => 'Se ha encontrado registrado su DNI en Sumarios',
                     'resultado' => 'OK'
                 ];
