@@ -19,6 +19,14 @@
     <link rel="stylesheet" href="<?=base_url('adminlte/plugins/overlayScrollbars/css/')?>OverlayScrollbars.min.css">
     <!-- summernote -->
     <link rel="stylesheet" href="<?=base_url('adminlte/plugins/summernote/')?>summernote-bs4.min.css">
+    <!-- jquery-confirm -->
+    <link rel="stylesheet" href="<?= base_url('adminlte/plugins/jquery-confirm/') ?>jquery-confirm.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?= base_url('adminlte/plugins/select2/css/') ?>select2.min.css">
+    <link rel="stylesheet" href="<?= base_url('adminlte/plugins/select2-bootstrap4-theme/') ?>select2-bootstrap4.min.css">
+    <!-- Noty -->
+    <link rel="stylesheet" href="<?= base_url('adminlte/plugins/noty/') ?>noty.css">
+    <link rel="stylesheet" href="<?= base_url('adminlte/plugins/noty/') ?>themes/bootstrap-v4.css">
 
     <!-- Site style -->
     <link rel="stylesheet" href="<?=base_url('assets/css/')?>admin-styles.min.css">

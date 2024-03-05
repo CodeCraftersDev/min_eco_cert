@@ -19,7 +19,7 @@
                                             </select>
                                             <input type="search" name="search" id="search" class="form-control onlyalphanumeric" placeholder="Buscar..." value="<?= isset($_GET['search']) && !empty($_GET['search']) ? $_GET['search'] : ''?>">
                                             <div class="input-group-append">
-                                                <button class="btn btn-eco-primary-outline" type="submit"><i class="fas fa-search"></i></button>
+                                                <button class="btn btn-eco-secondary-outline" type="submit"><i class="fas fa-search"></i></button>
                                             </div>
                                         </div>
                                     </div>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-tools">
                             <div class="float-right">
-                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-eco-primary"><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
+                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-eco-primary disabled" disabled><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,6 @@
                                         <th> Nro. Sumario </th>
                                         <th> Carátula </th>
                                         <th> Disposición </th>
-                                        <th> Titular </th>
                                         <th> Origen </th>
                                         <th> Destino </th>
                                         <th></th>
@@ -53,13 +52,12 @@
                                             <tr id="<?= $summary->id ?>" >
                                                 <td><?= $summary->id ?></td>
                                                 <td><?= $summary->d_sumario ?></td>
-                                                <td><?= $summary->n_disposicion ?></td>
-                                                <td><?= $summary->denominacion ?></td>
-                                                <td><?= $summary->c_origen ?></td>
-                                                <td><?= $summary->c_destino ?></td>
+                                                <td><?= $summary->d_disposicion ?></td>
+                                                <td><?= $summary->d_origen ?></td>
+                                                <td><?= $summary->d_destino ?></td>
                                                 <td class="actions">
                                                     <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit" class="edit"><i class="far fa-edit"></i>
-                                                    </a><button class="remove" data-name="<?= $summary->denominacion ?>" data-id="<?= $summary->id ?>"><i class="fas fa-trash"></i></button>
+                                                    </a><button class="remove" data-name="<?= $summary->d_disposicion ?>" data-id="<?= $summary->id ?>"><i class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -83,7 +81,7 @@
 <!-- /.content-wrapper -->
 <script>
     const init = function() {
-        admin.communities.list.init();
+        admin.summaries.list.init();
     };
 </script>
 <?= $this->endSection();?>

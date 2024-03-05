@@ -25,3 +25,4 @@ $routes->get('admin/logout', [AdminController::class, 'logout']);
 $routes->get('admin/summaries', [SummariesController::class, 'index']);
 $routes->get('admin/summaries/(:num)/edit', [[SummariesController::class, 'buildEdit'], '$1']);
 $routes->post('admin/summaries/edit', [[SummariesController::class, 'processEdit'], '$1']);
+$routes->post('admin/summaries/create', [[SummariesController::class, 'processCreate'], '$1']);

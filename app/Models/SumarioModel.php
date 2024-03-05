@@ -107,7 +107,7 @@ class SumarioModel extends Model{
         try {
 
             $builder = $this->db->table($this->sumario.' s');
-            $query =  $builder->select('s.id, s.d_sumario,  sd.*')
+            $query =  $builder->select('s.id, s.d_sumario, s.f_entrada, s.n_expte, s.f_inicio_expte,  sd.*')
                 ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
                 ->where('s.id', $id)
                 ->get();
@@ -142,7 +142,7 @@ class SumarioModel extends Model{
      * Get all data from database.
      *
      */
-    public function getAll ($filter = false, $perPage = 10) {
+    public function getAll ($filter = false, $page, $perPage = 10) {
 
         try {
 
@@ -156,18 +156,21 @@ class SumarioModel extends Model{
             //      }
             //  }
 
-            $builder = $this->db->table($this->sumario.' s');
-            $query =  $builder->select('s.id, s.d_sumario, sd.n_disposicion, sd.c_origen, sd.c_destino, st.denominacion')
-                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
-                ->join($this->sumarioTitulares.' st', 's.id = st.sumarios_id')
-                ->where('st.titular', 'S')
-                ->get();
+            $pager = service('pager');
+            $offset = ($page - 1) * $perPage;
 
-            $result = $query->getResult();
-            $pager = null; //$query->paginate($perPage);
+            $builder = $this->db->table($this->sumario.' s');
+            $query = $builder->select('s.id, s.d_sumario, sd.d_disposicion, sd.d_origen, sd.d_destino')
+                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
+                ->get($perPage,$offset)
+                ->getResult();
+
+            $total = $builder->countAllResults(); // Obtener el total de resultados
+
+            $pager = $pager->makeLinks($page,$perPage,$total);
 
             return [
-                'summaries' => $result,
+                'summaries' => $query,
                 'pager' => $pager
             ];
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
