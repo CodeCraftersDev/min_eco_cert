@@ -34,7 +34,7 @@ class SummariesController extends BaseController {
         $page = (int)($this->request->getVar('page') !== null ? $this->request->getVar('page') : 1); // Obtener la página actual
 
         $data = [
-            'summaries' => $this->Summaries->getAll($filters, $page, $this->perPage),
+            'summaries' => $this->Summaries->getAll($page, $this->perPage, $filters),
             'pager' => $pager
         ];
 

@@ -198,7 +198,7 @@ class SumarioModel extends Model{
      * Get all data from database.
      *
      */
-    /*public function getAll ($filter = false, $page, $perPage = 10) {
+    public function getAll ($page, $perPage = 10, $filter = false) {
 
         try {
 
@@ -232,5 +232,5 @@ class SumarioModel extends Model{
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
             throw new \RuntimeException($e->getMessage());
         }
-    }*/
+    }
 }
