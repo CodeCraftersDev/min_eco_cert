@@ -123,4 +123,10 @@ class SummariesController extends BaseController {
 
         $this->Protect->ajaxDie($response);
     }
+
+    public function getHistory(){
+        $id = $this->request->getPost('id');
+        $arrSumaries = $this->Summaries->getHistoryById($id);
+        return $this->response->setJSON($arrSumaries)->setStatusCode(200);
+    }
 }

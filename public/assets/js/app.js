@@ -225,6 +225,31 @@ const admin = {
                         }
                     });
                 });
+
+                $(document).on('click', '#summaries-list .table button.show', function(ev) {
+                    let sumaryID = $(this).attr('data-id');
+                    if($(this).hasClass('showed')){
+                        console.log('#hist_'+sumaryID);
+                        $('#hist_'+sumaryID).remove();
+                        $(this).removeClass('showed');
+                    }
+                    else{
+                        $(this).addClass('showed');
+                        $('#ajax_loader').show();
+                        $.ajax({
+                            type: "POST",
+                            url: base_url+"/summaries/show_hist",
+                            data: {
+                                "id": sumaryID,
+                            },
+                            dataType: "json",
+                            success: function(result){
+                                $('#ajax_loader').hide();
+                                showTable(sumaryID, result);
+                            }
+                        });
+                    }
+                })
             }
         },
         form: {
@@ -333,4 +358,29 @@ const admin = {
             }
         }
     }
+}
+
+function showTable(id, json){
+    let tableHist = '<table width="100%"><thead><tr>' +
+        '<th>Sumariado</th>' +
+        '<th>Concepto</th>' +
+        '<th>Origen</th>' +
+        '<th>Destino</th>' +
+        '<th>Folio</th>' +
+        '<th>Tipo</th>' +
+        '<th>Estado</th>' +
+        '</tr></thead><tbody>';
+    $.each(json, function( index, data ) {
+        tableHist = tableHist+'<tr>' +
+            '<td>'+data.sumariado+'</td>'+
+            '<td>'+data.concepto+'</td>'+
+            '<td>'+data.origen+'</td>'+
+            '<td>'+data.destino+'</td>'+
+            '<td>'+data.folio+'</td>'+
+            '<td>'+data.tipo+'</td>'+
+            '<td>'+data.estado+'</td>'+
+            '</tr>';
+    });
+    tableHist = tableHist + '</tbody></table>';
+    $('<tr id="hist_'+id+'" style="background-color: #CCCCCC;"><td colspan="6">'+tableHist+'</td></tr>').insertAfter('.table #'+id);
 }

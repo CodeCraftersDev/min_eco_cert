@@ -57,8 +57,22 @@
                                                 <td><?= $summary->d_origen ?></td>
                                                 <td><?= $summary->d_destino ?></td>
                                                 <td class="actions">
-                                                    <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit" class="edit"><i class="far fa-edit"></i>
-                                                    </a><button class="remove" data-name="<?= $summary->d_disposicion ?>" data-id="<?= $summary->id ?>"><i class="fas fa-trash"></i></button>
+                                                    <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit"
+                                                       class="edit btn">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <button
+                                                        class="btn remove"
+                                                        data-name="<?= $summary->d_disposicion ?>"
+                                                        data-id="<?= $summary->id ?>">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                    <button
+                                                            type="button"
+                                                            class="btn show"
+                                                            data-id="<?= $summary->id ?>">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="<?= base_url('adminlte/plugins/noty/') ?>themes/bootstrap-v4.css">
 
     <!-- Site style -->
-    <link rel="stylesheet" href="<?=base_url('assets/css/')?>admin-styles.min.css">
+    <link rel="stylesheet" href="<?=base_url('assets/css/')?>admin-styles.min.css?no-cache=<?=time()?>">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('assets/img/') ?>favicon.jpg">
@@ -38,6 +38,36 @@
     <meta name="theme-color" content="#004f9f">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
+
+<!-- ajax Loader -->
+<div id="ajax_loader">
+    <div class="ajax_background"></div>
+    <div class="ajax_img_loader">
+        <svg version="1.1" id="L3"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             x="0px"
+             y="0px"
+             viewBox="0 0 100 100"
+             enable-background="new 0 0 0 0"
+             xml:space="preserve"
+        >
+        <circle fill="none" stroke="#2ECC71" stroke-width="4" cx="50" cy="50" r="44" />
+            <circle fill="#fff" stroke="#2ECC71" stroke-width="3" cx="8" cy="54" r="6" >
+                <animateTransform
+                        attributeName="transform"
+                        dur="2s"
+                        type="rotate"
+                        from="0 50 48"
+                        to="360 50 52"
+                        repeatCount="indefinite" />
+
+            </circle>
+    </svg>
+    </div>
+</div>
+
+
 <div class="wrapper">
 
     <!-- Preloader -->
