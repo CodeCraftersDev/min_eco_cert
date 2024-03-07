@@ -12,7 +12,7 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <li class="nav-item has-treeview  <?= strpos($section, 'config') !== false ? ' menu-open' : '' ?>">
+                <!-- <li class="nav-item has-treeview  <?= strpos($section, 'config') !== false ? ' menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= strpos($section, 'config') !== false ? ' active' : '' ?>">
                         <i class="nav-icon fas fa-user-cog"></i>
                         <p>
@@ -30,7 +30,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <!--   Sumarios  -->
                 <li class="nav-item has-treeview  <?= strpos($section, 'summaries') !== false ? ' menu-open' : '' ?>">
                     <a href="#" class="nav-link <?= strpos($section, 'summaries') !== false ? ' active' : '' ?>">

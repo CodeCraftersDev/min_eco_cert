@@ -199,32 +199,12 @@ class SumarioModel extends Model{
      *
      */
     public function getAll ($page, $perPage = 10, $filter = false) {
-
         try {
-
-            // TODO: add filters!
-            //  if(is_array($filter) && !empty($filter)) {
-            //      if(isset($filter['search']) && !empty($filter['search'])) {
-            //          if($filter['type'] === 'name')
-            //              $query->like('st.denominacion', $filter['search']);
-            //          else
-            //              $query->where('s.id', $filter['search']);
-            //      }
-            //  }
-
             $pager = service('pager');
             $offset = ($page - 1) * $perPage;
-
-            $builder = $this->db->table($this->sumario.' s');
-            $query = $builder->select('s.id, s.d_sumario, sd.d_disposicion, sd.d_origen, sd.d_destino')
-                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
-                ->get($perPage,$offset)
-                ->getResult();
-
-            $total = $builder->countAllResults(); // Obtener el total de resultados
-
+            $total = $this->getAllCount(true, $filter, $perPage, $offset);
+            $query = $this->getAllCount(false, $filter, $perPage, $offset);
             $pager = $pager->makeLinks($page,$perPage,$total);
-
             return [
                 'summaries' => $query,
                 'pager' => $pager
@@ -232,5 +212,28 @@ class SumarioModel extends Model{
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
             throw new \RuntimeException($e->getMessage());
         }
+    }
+
+    private function getAllCount($count, $filter, $perPage, $offset){
+        $builder = $this->db->table($this->sumario.' s');
+        $builder->select('s.id, s.d_sumario, sd.d_disposicion, sd.d_origen, sd.d_destino')
+            ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
+            ->join($this->sumarioTitulares. ' st', 's.id = st.sumarios_id');
+        if(is_array($filter) && !empty($filter)) {
+            if(isset($filter['search']) && !empty($filter['search'])) {
+                if($filter['type'] === 'name')
+                    $builder->like('st.d_denominacion', $filter['search']);
+                else
+                    $builder->like('s.d_sumario', $filter['search']);
+            }
+        }
+
+        if($count == true){
+            $query = $builder->countAllResults(false);
+        }
+        else{
+            $query = $builder->get($perPage,$offset)->getResult();
+        }
+        return $query;
     }
 }

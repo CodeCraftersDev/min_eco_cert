@@ -48,6 +48,7 @@
                                     </tr>
                                     </thead>
                                     <tbody class="sortable-row" data-axis="y">
+                                    <?php if(!empty($summaries) && is_array($summaries)) :?>
                                         <?php foreach ($summaries['summaries'] as $summary) : ?>
                                             <tr id="<?= $summary->id ?>" >
                                                 <td><?= $summary->id ?></td>
@@ -61,6 +62,7 @@
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
+                                    <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>
