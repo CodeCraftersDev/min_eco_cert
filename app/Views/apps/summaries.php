@@ -63,7 +63,7 @@
                                                     </a>
                                                     <button
                                                         class="btn remove"
-                                                        data-name="<?= $summary->d_disposicion ?>"
+                                                        data-name="<?= $summary->d_sumario ?>"
                                                         data-id="<?= $summary->id ?>">
                                                         <i class="fas fa-trash"></i>
                                                     </button>

@@ -182,6 +182,8 @@ const admin = {
                                                     });
                                                 }
 
+                                                $('#hist_'+id).remove();
+
                                                 $btn.closest('tr').animate({
                                                     height: 0
                                                 });
