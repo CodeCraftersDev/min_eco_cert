@@ -304,7 +304,8 @@ function addBlankUser(sumariId){
         success: function(result){
             $('#ajax_loader').hide();
             if(result.code == 'OK'){
-                $('.users-list').append('<div id="userForm_'+result.userId+'" class="row user_form_block">' +
+                $('.users-list').append('<form id="userForm_'+result.userId+'">' +
+                    '<div class="row user_form_block">' +
                     '<div class="col-md-4">' +
                     '    <div class="form-group">' +
                     '        <label for="input-d_denominacion-'+result.userId+'">Denominación</label>' +
@@ -342,7 +343,8 @@ function addBlankUser(sumariId){
                     '    <button type="button" class="btn btn-eco-danger-outline" onclick="deleteUser('+result.userId+')">Eliminar' +
                     '    </button>' +
                     '</div>' +
-                    '</div>');
+                    '</div>' +
+                    '</form>');
                 $.alert({
                     title: 'Información',
                     content: result.message,
@@ -377,7 +379,8 @@ function addBlankUser(sumariId){
 }
 
 function saveUser(id){
-    const validator = $( "#userForm_"+id ).validate();
+    let validator = $( "#userForm_"+id ).validate();
+    //console.log($( "#userForm_"+id ));
     $("#input-d_denominacion-"+id).rules("add", {
         required: true,
         messages: {
@@ -462,7 +465,7 @@ function deleteUser(id){
         success: function(result){
             $('#ajax_loader').hide();
             if(result.code == 'OK'){
-                $('#rowUser_'+id).remove();
+                $('#userForm_'+id).remove();
                 $.alert({
                     title: 'Información',
                     content: result.message,
