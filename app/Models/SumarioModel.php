@@ -227,6 +227,7 @@ class SumarioModel extends Model{
                     $builder->like('s.d_sumario', $filter['search']);
             }
         }
+        $builder->groupBy(['s.id', 's.d_sumario', 'sd.d_disposicion', 'sd.d_origen', 'sd.d_destino']);
 
         if($count == true){
             $query = $builder->countAllResults(false);
