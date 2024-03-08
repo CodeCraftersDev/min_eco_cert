@@ -10,13 +10,18 @@
                 <!-- jquery validation -->
                 <div class="card card-primary">
                     <!-- form start -->
-                    <form role="form" id="form-summary" method="POST" enctype="multipart/form-data">
-                        <?php if(isset($summary)) { ?>
-                            <input type="hidden" name="id" id="id" value="<?= $summary->id ?>">
-                        <?php } ?>
+
                         <div class="card-body">
                             <div class="row">
+
+
+
+
                                 <div class="card col-12 mb-4">
+                                    <form role="form" id="form-summary" method="POST" enctype="multipart/form-data">
+                                        <?php if(isset($summary)) { ?>
+                                            <input type="hidden" name="id" id="id" value="<?= $summary->id ?>">
+                                        <?php } ?>
                                     <div class="card-header">
                                         Detalles del Sumario
                                     </div>
@@ -98,33 +103,46 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div>
+
+
+
                                 <div class="card col-12">
                                     <div class="card-header">
                                         Involucrados en el Sumario
+                                        <button
+                                            id="addUser"
+                                            type="button"
+                                            style="margin-right: 10px"
+                                            class="btn btn-eco-primary-outline"
+                                        >Agregar Nuevo Interviniente
+                                        </button>
                                     </div>
                                     <div class="card-body">
                                         <!-- involved details -->
-                                        <div class="col-12">
+                                        <div class="col-12 users-list">
                                             <?php foreach ($summaryInvolved as $involved) : ?>
-                                            <div class="row">
+                                            <form id="userForm_<?=trim($involved->id)?>">
+                                            <div class="row user_form_block" id="rowUser_<?=trim($involved->id)?>">
+
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="input-d_denominacion-"<?= trim($involved->id) ?>">Denominación</label>
+                                                        <label for="input-d_denominacion-<?= trim($involved->id) ?>">Denominación</label>
                                                         <input type="text" name="d_denominacion-<?= trim($involved->id) ?>" class="form-control" id="input-d_denominacion-<?= trim($involved->id) ?>"
                                                                value="<?= isset($involved) ? trim($involved->d_denominacion) : '' ?>">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="input-n_documento-"<?= trim($involved->id) ?>">Documento Nro.</label>
+                                                        <label for="input-n_documento-<?= trim($involved->id) ?>">Documento Nro.</label>
                                                         <input type="text" name="n_documento-<?= trim($involved->id) ?>" class="form-control" id="input-n_documento-<?= trim($involved->id) ?>"
                                                                value="<?= isset($involved) ? trim($involved->n_documento) : '' ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="input-tipo-"<?= trim($involved->c_tipo) ?>">Tipo Documento</label>
+                                                        <label for="input-tipo-<?= trim($involved->c_tipo) ?>">Tipo Documento</label>
                                                         <select name="tipo-doc-<?= trim($involved->id) ?>" class="form-control" id="input-tipo-doc-<?= trim($involved->id) ?>">
                                                             <option value="" > Seleccione </option>
                                                             <option value="dni" <?= isset($involved) && trim($involved->c_tipo) == 'dni' ? 'selected' : ''?>> DNI </option>
@@ -133,29 +151,37 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <label for="input-titular-"<?= trim($involved->id) ?>">Titular</label>
+                                                        <label for="input-titular-<?= trim($involved->id) ?>">Titular</label>
                                                         <select name="titular-<?= trim($involved->id) ?>" class="form-control" id="input-titular-<?= trim($involved->id) ?>">
                                                             <option value="" > Seleccione </option>
-                                                            <option value="S" <?= isset($involved) && trim($involved->c_ult_titular) == 'S' ? 'selected' : ''?>> SI </option>
-                                                            <option value="N" <?= isset($involved) && trim($involved->c_ult_titular) == 'S' ? 'selected' : ''?>> NO </option>
+                                                            <option value="S" <?=isset($involved) && trim($involved->c_ult_titular) == 'S' ? 'selected' : ''?>> SI </option>
+                                                            <option value="N" <?= isset($involved) && trim($involved->c_ult_titular) == 'N' ? 'selected' : ''?>> NO </option>
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="col-md-2" style="flex-direction: row; align-items: center; display: flex; padding-top: 10px;">
+                                                    <button
+                                                        type="button"
+                                                        style="margin-right: 10px"
+                                                        class="btn btn-eco-primary-outline"
+                                                        onclick="saveUser(<?=$involved->id?>)">Guardar
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-eco-danger-outline"
+                                                        onclick="deleteUser(<?=$involved->id?>)">Eliminar
+                                                    </button>
+                                                </div>
+
                                             </div>
+                                            </form>
                                             <?php endforeach; ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div class="form-footer fixed">
-                                <div class="card-footer text-right">
-                                    <button type="button" class="btn btn-eco-secondary-outline" onclick="window.history.go(-1); return false;">Cancelar</button>
-                                    <button type="submit" class="btn btn-eco-primary with-spinner">Guardar <div class="spinner"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span></div></button>
 
-                                </div>
-                            </div>
-                    </form>
                 </div>
                 <!-- /.card -->
             </div>

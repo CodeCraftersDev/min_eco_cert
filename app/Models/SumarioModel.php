@@ -237,6 +237,11 @@ class SumarioModel extends Model{
         return $query;
     }
 
+    /** Funcion que trae todos los historicos del sumario que se encuentran en tabla movimientos
+     * @param $id
+     * @return array
+     */
+
     public function getHistoryById($id){
         $builder = $this->db->table('movimientos su');
         $query = $builder->select('su.d_origen, su.d_destino, su.d_tramite, su.n_fojas, su.d_estado_multa as estado, su.f_remision')
@@ -244,4 +249,94 @@ class SumarioModel extends Model{
             ->get();
         return $query->getResultArray();
     }
+
+    /**
+     * Funcion que crea un nuevo usuario en BLANCO en sumarios_titulares
+     * @param $id
+     * @return array
+     */
+    public function addNewUserSum($id){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios_titulares st');
+        $data = [
+            'sumarios_id' => $id,
+            'n_documento' => null,
+            'c_tipo' => null,
+            'd_denominacion' => '',
+            'c_ult_titular' => 'N',
+            'created' => time(),
+            'createdby' => session()->get('userid')
+        ];
+        $builder->insert($data);
+        $id = $this->db->insertID();
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'No se pudo insertar en la base de datos el usuario'
+            ];
+        }
+        else{
+            $ret = [
+                'userId' => $id,
+                'code' => 'OK',
+                'message' => 'Se agregó nuevo usuario'
+            ];
+        }
+        return $ret;
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function updtUserSumary($id, $sumario_id, $doc, $tipo_doc, $denom, $titular){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios_titulares st');
+        $builder->set('sumarios_id', $sumario_id);
+        $builder->set('n_documento', $doc);
+        $builder->set('c_tipo', $tipo_doc);
+        $builder->set('d_denominacion', $denom);
+        $builder->set('c_ult_titular', $titular);
+        $builder->set('updated', time());
+        $builder->set('updatedby', session()->get('userid'));
+        $builder->where('id', $id);
+        $builder->update();
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'No se pudo guardar el usuario'
+            ];
+        }
+        else{
+            $ret = [
+                'code' => 'OK',
+                'message' => 'Se guardo al usuario correctamente'
+            ];
+        }
+        return $ret;
+    }
+
+    public function delUserSumary($id){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios_titulares st');
+        $builder->where('id', $id);
+        $builder->delete();
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'No se pudo Eliminar al usuario'
+            ];
+        }
+        else{
+            $ret = [
+                'code' => 'OK',
+                'message' => 'Se eliminó al usuario correctamente'
+            ];
+        }
+        return $ret;
+    }
+
 }

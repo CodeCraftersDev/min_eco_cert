@@ -259,101 +259,10 @@ const admin = {
                 _this.events();
             },
             events: function() {
-                // Form validation
-                $('#form-summary').validate({
-                    ignore: ":hidden:not(#summernote),.note-editable.panel-body",
-                    // rules: {
-                    //     name: {
-                    //         required: true,
-                    //         maxlength: 30,
-                    //         loginRegex: true,
-                    //     },
-                    //     regions_id: {
-                    //         required: $('[name="regions_id"]').length == 1
-                    //     }
-                    // },
-                    // messages: {
-                    //     name: {
-                    //         required: 'Debe completar este campo.',
-                    //         maxlength: 'Máximo 30 caracteres.'
-                    //     },
-                    //     regions_id: {
-                    //         required: 'Debe seleccionar la provincia.'
-                    //     }
-                    // },
-                    errorElement: 'span',
-                    errorPlacement: function(error, element) {
-                        error.addClass('invalid-feedback');
-                        element.closest('.form-group').append(error);
-                    },
-                    highlight: function(element, errorClass, validClass) {
-                        if ($(element).hasClass('summernote')) {
-                            $(element).closest('.form-group').addClass('is-invalid');
-                        }
-                        $(element).addClass('is-invalid');
-                    },
-                    unhighlight: function(element, errorClass, validClass) {
-                        if ($(element).hasClass('summernote')) {
-                            $(element).closest('.form-group').removeClass('is-invalid');
-                        }
-                        $(element).removeClass('is-invalid');
-                    },
-                    invalidHandler: function(form, validator) {
-                        if (!validator.numberOfInvalids())
-                            return;
 
-                        let $element = $(validator.errorList[0].element);
-
-                        if (!$element.hasClass('summernote'))
-                            return;
-
-                        $('html, body').animate({
-                            scrollTop: $element.closest('.form-group').offset().top - 50
-                        }, 300);
-
-                    },
-                    submitHandler: function(form) {
-                        let $btn = $(form).find('button[type="submit"]');
-                        $btn.addClass('loading');
-                        $btn.attr('disabled', true);
-                        const endpoint = $('[name="id"]').length ? 'edit' : 'create';
-                        const data = new FormData(form);
-
-                        $.ajax({
-                            url: base_url + '/summaries/' + endpoint,
-                            type: 'POST',
-                            processData: false,
-                            contentType: false,
-                            data: data,
-                            // headers: {
-                            //     'X-Auth-Token': token
-                            // },
-                            success: function(res) {
-                                if (res.action) {
-                                    // Redirect to list
-                                    window.location.href = base_url + '/summaries';
-                                } else {
-                                    $.alert({
-                                        title: 'Error',
-                                        content: res.message,
-                                        escapeKey: 'cancel',
-                                        draggable: false,
-                                        closeIcon: true,
-                                        type: 'red',
-                                        backgroundDismiss: true,
-                                        typeAnimated: true,
-                                        animation: 'zoom',
-                                        closeAnimation: 'zoom',
-                                        animateFromElement: false
-                                    });
-                                }
-                            },
-                            complete: function() {
-                                $btn.removeClass('loading');
-                                $btn.attr('disabled', false);
-                            }
-                        });
-                    }
+                $('#addUser').click(function (){
+                    let sumary_id = $('#id').val();
+                    addBlankUser(sumary_id);
                 });
             }
         }
@@ -381,4 +290,208 @@ function showTable(id, json){
     });
     tableHist = tableHist + '</tbody></table>';
     $('<tr id="hist_'+id+'" style="background-color: #CCCCCC;"><td colspan="6">'+tableHist+'</td></tr>').insertAfter('.table #'+id);
+}
+
+function addBlankUser(sumariId){
+    $('#ajax_loader').show();
+    $.ajax({
+        type: "POST",
+        url: base_url+"/summaries/adduser",
+        data: {
+            "id": sumariId,
+        },
+        dataType: "json",
+        success: function(result){
+            $('#ajax_loader').hide();
+            if(result.code == 'OK'){
+                $('.users-list').append('<div id="userForm_'+result.userId+'" class="row user_form_block">' +
+                    '<div class="col-md-4">' +
+                    '    <div class="form-group">' +
+                    '        <label for="input-d_denominacion-'+result.userId+'">Denominación</label>' +
+                    '        <input type="text" name="d_denominacion-'+result.userId+'" class="form-control" id="input-d_denominacion-'+result.userId+'" value="">' +
+                    '    </div>' +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '    <div class="form-group">' +
+                    '        <label for="input-n_documento-'+result.userId+'">Documento Nro.</label>' +
+                    '        <input type="text" name="n_documento-'+result.userId+'" class="form-control" id="input-n_documento-'+result.userId+'" value="">' +
+                    '    </div>' +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '    <div class="form-group">' +
+                    '        <label for="input-tipo-'+result.userId+'">Tipo Documento</label>' +
+                    '        <select name="tipo-doc-'+result.userId+'" class="form-control" id="input-tipo-doc-'+result.userId+'">' +
+                    '            <option value=""> Seleccione </option>' +
+                    '            <option value="dni"> DNI </option>' +
+                    '        </select>' +
+                    '    </div>' +
+                    '</div>' +
+                    '<div class="col-md-2">' +
+                    '    <div class="form-group">' +
+                    '        <label for="input-titular-'+result.userId+'">Titular</label>' +
+                    '        <select name="titular-'+result.userId+'" class="form-control" id="input-titular-'+result.userId+'">' +
+                    '            <option value=""> Seleccione </option>' +
+                    '            <option value="S"> SI </option>' +
+                    '            <option value="N" selected> NO </option>' +
+                    '        </select>' +
+                    '    </div>' +
+                    '</div>' +
+                    '<div class="col-md-2" style="flex-direction: row; align-items: center; display: flex; padding-top: 10px;">' +
+                    '    <button type="button" style="margin-right: 10px" class="btn btn-eco-primary-outline" onclick="saveUser('+result.userId+')">Guardar' +
+                    '    </button>' +
+                    '    <button type="button" class="btn btn-eco-danger-outline" onclick="deleteUser('+result.userId+')">Eliminar' +
+                    '    </button>' +
+                    '</div>' +
+                    '</div>');
+                $.alert({
+                    title: 'Información',
+                    content: result.message,
+                    escapeKey: 'cancel',
+                    draggable: false,
+                    closeIcon: true,
+                    type: 'green',
+                    backgroundDismiss: true,
+                    typeAnimated: true,
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    animateFromElement: false
+                });
+            }
+            else{
+                $.alert({
+                    title: 'Error',
+                    content: result.message,
+                    escapeKey: 'cancel',
+                    draggable: false,
+                    closeIcon: true,
+                    type: 'red',
+                    backgroundDismiss: true,
+                    typeAnimated: true,
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    animateFromElement: false
+                });
+            }
+        }
+    });
+}
+
+function saveUser(id){
+    const validator = $( "#userForm_"+id ).validate();
+    $("#input-d_denominacion-"+id).rules("add", {
+        required: true,
+        messages: {
+            required: "Este campo es Obligatorio"
+        }
+    });
+
+    $("#input-n_documento-"+id).rules("add", {
+        required: true,
+        messages: {
+            required: "Este campo es Obligatorio",
+            number: "Por favor ingresar solo números"
+        }
+    });
+    let valid = validator.form();
+    if(valid){
+        $('#ajax_loader').show();
+        let denominacion = $("#input-d_denominacion-"+id).val();
+        let documento = $("#input-n_documento-"+id).val();
+        let tipo_doc = $("#input-tipo-doc-"+id).val();
+        let titular = $("#input-titular-"+id).val();
+        let sumary_id = $('#id').val();
+
+        $.ajax({
+            type: "POST",
+            url: base_url+"/summaries/updtUser",
+            data: {
+                'id': id,
+                'sumario_id': sumary_id,
+                'documento': documento,
+                'tipo_doc': tipo_doc,
+                'denominacion': denominacion,
+                'titular': titular
+            },
+            dataType: "json",
+            success: function(result){
+                $('#ajax_loader').hide();
+                if(result.code == 'OK'){
+                    $.alert({
+                        title: 'Información',
+                        content: result.message,
+                        escapeKey: 'cancel',
+                        draggable: false,
+                        closeIcon: true,
+                        type: 'green',
+                        backgroundDismiss: true,
+                        typeAnimated: true,
+                        animation: 'zoom',
+                        closeAnimation: 'zoom',
+                        animateFromElement: false
+                    });
+                }
+                else{
+                    $.alert({
+                        title: 'Error',
+                        content: result.message,
+                        escapeKey: 'cancel',
+                        draggable: false,
+                        closeIcon: true,
+                        type: 'red',
+                        backgroundDismiss: true,
+                        typeAnimated: true,
+                        animation: 'zoom',
+                        closeAnimation: 'zoom',
+                        animateFromElement: false
+                    });
+                }
+            }
+        });
+    }
+}
+
+function deleteUser(id){
+    $('#ajax_loader').show();
+    $.ajax({
+        type: "POST",
+        url: base_url+"/summaries/delUser",
+        data: {
+            "id": id,
+        },
+        dataType: "json",
+        success: function(result){
+            $('#ajax_loader').hide();
+            if(result.code == 'OK'){
+                $('#rowUser_'+id).remove();
+                $.alert({
+                    title: 'Información',
+                    content: result.message,
+                    escapeKey: 'cancel',
+                    draggable: false,
+                    closeIcon: true,
+                    type: 'green',
+                    backgroundDismiss: true,
+                    typeAnimated: true,
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    animateFromElement: false
+                });
+            }
+            else{
+                $.alert({
+                    title: 'Error',
+                    content: result.message,
+                    escapeKey: 'cancel',
+                    draggable: false,
+                    closeIcon: true,
+                    type: 'red',
+                    backgroundDismiss: true,
+                    typeAnimated: true,
+                    animation: 'zoom',
+                    closeAnimation: 'zoom',
+                    animateFromElement: false
+                });
+            }
+        }
+    });
 }

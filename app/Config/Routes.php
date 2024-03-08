@@ -28,3 +28,7 @@ $routes->post('admin/summaries/edit', [[SummariesController::class, 'processEdit
 $routes->post('admin/summaries/create', [[SummariesController::class, 'processCreate'], '$1']);
 /*ajax mostrar historico */
 $routes->post('admin/summaries/show_hist', [SummariesController::class, 'getHistory']);
+/* ajax formularios */
+$routes->post('admin/summaries/adduser', [[SummariesController::class, 'ABMUserSumary'], 'add']);
+$routes->post('admin/summaries/updtUser', [[SummariesController::class, 'ABMUserSumary'], 'updt']);
+$routes->post('admin/summaries/delUser', [[SummariesController::class, 'ABMUserSumary'], 'del']);

@@ -129,4 +129,27 @@ class SummariesController extends BaseController {
         $arrSumaries = $this->Summaries->getHistoryById($id);
         return $this->response->setJSON($arrSumaries)->setStatusCode(200);
     }
+
+    public function ABMUserSumary($type){
+        switch ($type) {
+            case 'add':
+                $sumary_id = $this->request->getPost('id');
+                $resp = $this->Summaries->addNewUserSum($sumary_id);
+                break;
+            case 'updt':
+                $id = $this->request->getPost('id');
+                $sumario_id = $this->request->getPost('sumario_id');
+                $doc = $this->request->getPost('documento');
+                $tipo_doc = $this->request->getPost('tipo_doc');
+                $denom = $this->request->getPost('denominacion');
+                $titular = $this->request->getPost('titular');
+                $resp = $this->Summaries->updtUserSumary($id, $sumario_id, $doc, $tipo_doc, $denom, $titular);
+                break;
+            case 'del':
+                $user_id = $this->request->getPost('id');
+                $resp = $this->Summaries->delUserSumary($user_id);
+                break;
+        }
+        return $this->response->setJSON($resp)->setStatusCode(200);
+    }
 }

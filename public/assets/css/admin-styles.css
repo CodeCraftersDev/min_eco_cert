@@ -10,6 +10,8 @@
     --color-white: var(--white);
     --trans-white: rgba(255, 255, 255, .7);
     --trans-black: rgba(0, 0, 0, .7);
+    --eco-danger: red;
+    --eco-danger-disabled: rgba(255, 0, 0, 0.62);
 }
 
 /** ajax loader */
@@ -208,6 +210,52 @@ a:hover {
 .btn-eco-secondary-outline:not(:disabled):not(.disabled):active:focus, .btn-eco-secondary-outline:not(:disabled):not(.disabled).active:focus,
 .show > .btn-eco-secondary-outline.dropdown-toggle:focus {
     box-shadow: 0 0 0 0 rgba(79, 86, 85, 0.62);
+}
+
+
+/** danger  */
+.btn-eco-danger-outline {
+    color: var(--eco-danger);
+    border-color: var(--eco-danger);
+    border-radius: 50px;
+}
+
+.btn-eco-danger-outline:hover {
+    color: var(--white);
+    background-color: var(--eco-danger);
+    border-color: var(--eco-danger);
+}
+
+.btn-eco-danger-outline:focus, .btn-eco-danger-outline.focus {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.62);
+}
+
+.btn-eco-danger-outline.disabled, .btn-eco-danger-outline:disabled {
+    color: var(--eco-danger-disabled);
+    background-color: transparent;
+}
+
+.btn-eco-danger-outline:not(:disabled):not(.disabled):active, .btn-eco-danger-outline:not(:disabled):not(.disabled).active,
+.show > .btn-eco-primary-outline.dropdown-toggle {
+    color: var(--white);
+    background-color: var(--eco-danger);
+    border-color: var(--eco-danger);
+}
+
+.btn-eco-danger-outline:not(:disabled):not(.disabled):active:focus, .btn-eco-danger-outline:not(:disabled):not(.disabled).active:focus,
+.show > .btn-eco-danger-outline.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.62);
+}
+
+/**
+estilos de validacion del usuario
+*/
+.user_form_block input.error{
+    box-shadow: 0px 0px 3px red;
+}
+.user_form_block label.error{
+    color: red;
+    font-size: 13px;
 }
 
 /* form tables */
