@@ -3,6 +3,7 @@
 namespace App\Controllers\Apps;
 
 use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
 
 class SummariesController extends BaseController {
 
@@ -122,6 +123,25 @@ class SummariesController extends BaseController {
         }
 
         $this->Protect->ajaxDie($response);
+    }
+
+
+    /**
+     * Process delete summary || mark as deleted.
+     *
+     * @return ResponseInterface
+     */
+    public function processDelete() {
+
+        $id = $this->request->getPost('id');
+
+        $summary = $this->Summaries->getSummaryById($id);
+
+        if (!$id || !$summary)
+            $this->response->setStatusCode(404, 'Not found.');
+
+        $resp = $this->Summaries->markAsDeleted($id);
+        return $this->response->setJSON($resp)->setStatusCode(200);
     }
 
     public function getHistory(){

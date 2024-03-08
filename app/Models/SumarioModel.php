@@ -175,6 +175,26 @@ class SumarioModel extends Model{
     }
 
     /**
+     * Get summary from database by ID.
+     *
+     * @param int $id
+     * @return array
+     */
+    public function getSummaryById ($id) {
+        try {
+
+            $builder = $this->db->table($this->sumario.' s');
+            $query =  $builder->select('*')
+                ->where('s.id', $id)
+                ->get();
+
+            return $query->getRow();
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+    }
+
+    /**
      * Get summary involved from database by ID.
      *
      * @param int $id
@@ -227,6 +247,9 @@ class SumarioModel extends Model{
                     $builder->like('s.d_sumario', $filter['search']);
             }
         }
+        // not deleted
+        $builder->where('s.deleted', 'N');
+
         $builder->groupBy(['s.id', 's.d_sumario', 'sd.d_disposicion', 'sd.d_origen', 'sd.d_destino']);
 
         if($count == true){
@@ -335,6 +358,35 @@ class SumarioModel extends Model{
             $ret = [
                 'code' => 'OK',
                 'message' => 'Se eliminó al usuario correctamente'
+            ];
+        }
+        return $ret;
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function markAsDeleted($id){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios s');
+        $builder->set('deleted', 'S');
+        $builder->set('updated', time());
+        $builder->set('updatedby', session()->get('userid'));
+        $builder->where('id', $id);
+        $builder->update();
+        $this->db->transComplete();
+
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'Error al eliminar el Sumario'
+            ];
+        }
+        else{
+            $ret = [
+                'code' => 'OK',
+                'message' => 'Sumario eliminado correctamente'
             ];
         }
         return $ret;

@@ -26,6 +26,8 @@ $routes->get('admin/summaries', [SummariesController::class, 'index']);
 $routes->get('admin/summaries/(:num)/edit', [[SummariesController::class, 'buildEdit'], '$1']);
 $routes->post('admin/summaries/edit', [[SummariesController::class, 'processEdit'], '$1']);
 $routes->post('admin/summaries/create', [[SummariesController::class, 'processCreate'], '$1']);
+$routes->post('admin/summaries/delete',  [[SummariesController::class, 'processDelete'], '$1']);
+
 /*ajax mostrar historico */
 $routes->post('admin/summaries/show_hist', [SummariesController::class, 'getHistory']);
 /* ajax formularios */

@@ -170,15 +170,12 @@ const admin = {
                                 action: function() {
                                     $.ajax({
                                         url: base_url + '/summaries/delete',
-                                        type: "DELETE",
+                                        type: "POST",
                                         data: {
                                             id: id
                                         },
-                                        // headers: {
-                                        //     'X-Auth-Token': token
-                                        // },
                                         success: function(res) {
-                                            if (res.action) {
+                                            if (res.code === 'OK') {
                                                 if ($('#summaries-list .table tbody tr').length == 1) {
                                                     $('#summaries-list .table-container').slideUp(450, function() {
                                                         $('.empty-results').slideDown(450);
