@@ -238,9 +238,9 @@ class SumarioModel extends Model{
     }
 
     public function getHistoryById($id){
-        $builder = $this->db->table('movimientosal_old old');
-        $query = $builder->select('old.sumariado, old.concepto, old.origen, old.destino, old.folio, old.tipo, old.opmulta as estado')
-            ->where('old.asunto', $id)
+        $builder = $this->db->table('movimientos su');
+        $query = $builder->select('su.d_origen, su.d_destino, su.d_tramite, su.n_fojas, su.d_estado_multa as estado, su.f_remision')
+            ->where('su.sumarios_id', $id)
             ->get();
         return $query->getResultArray();
     }

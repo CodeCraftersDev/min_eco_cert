@@ -362,23 +362,21 @@ const admin = {
 
 function showTable(id, json){
     let tableHist = '<table width="100%"><thead><tr>' +
-        '<th>Sumariado</th>' +
-        '<th>Concepto</th>' +
         '<th>Origen</th>' +
-        '<th>Destino</th>' +
-        '<th>Folio</th>' +
-        '<th>Tipo</th>' +
+        '<th>destino</th>' +
+        '<th>Trámite</th>' +
+        '<th>Num Fojas</th>' +
         '<th>Estado</th>' +
+        '<th>Fecha Emisión</th>' +
         '</tr></thead><tbody>';
     $.each(json, function( index, data ) {
         tableHist = tableHist+'<tr>' +
-            '<td>'+data.sumariado+'</td>'+
-            '<td>'+data.concepto+'</td>'+
-            '<td>'+data.origen+'</td>'+
-            '<td>'+data.destino+'</td>'+
-            '<td>'+data.folio+'</td>'+
-            '<td>'+data.tipo+'</td>'+
+            '<td>'+data.d_origen+'</td>'+
+            '<td>'+data.d_destino+'</td>'+
+            '<td>'+data.d_tramite+'</td>'+
+            '<td>'+data.n_fojas+'</td>'+
             '<td>'+data.estado+'</td>'+
+            '<td>'+data.f_emision+'</td>'+
             '</tr>';
     });
     tableHist = tableHist + '</tbody></table>';
