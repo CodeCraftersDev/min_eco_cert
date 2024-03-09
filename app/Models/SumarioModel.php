@@ -152,6 +152,91 @@ class SumarioModel extends Model{
 
         return $ret;
     }
+    /**
+     * Funcion que crea un nuevo usuario en BLANCO en sumarios_titulares
+     * @param $id
+     * @return array
+     */
+    public function addSummary(){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios s');
+        $new = [
+            'd_sumario' => null,
+            'f_entrada' => null,
+            'n_expte' => null,
+            'f_inicio_expte' => null,
+            'id_sysse' => null,
+            'created' => time(),
+            'createdby' => session()->get('userid')
+        ];
+        $builder->insert($new);
+        $id = $this->db->insertID();
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'No se pudo insertar en la base de datos el sumario'
+            ];
+        }
+        else{
+            $ret = $id;
+        }
+        return $ret;
+    }
+
+    public function editSummary($summary){
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios st');
+        $builder->set('f_entrada', $summary->f_entrada);
+        $builder->set('d_sumario', $summary->d_sumario);
+
+        $builder->set('updated', time());
+        $builder->set('updatedby', session()->get('userid'));
+        $builder->where('id', $summary->id);
+        $builder->update();
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            return [
+                'code' => 'NOOK',
+                'message' => 'No se pudo guardar el sumario'
+            ];
+        }
+
+        $this->db->transStart();
+        $builder = $this->db->table('sumarios_detalle s');
+        $new = [
+            'sumarios_id' => $summary->id,
+            'd_origen' => $summary->d_origen,
+            'd_destino' => $summary->d_destino,
+            'd_tramite' => $summary->d_tramite,
+            'n_multa' => $summary->n_multa,
+            'd_disposicion' => $summary->d_disposicion,
+            'n_fojas' => $summary->n_fojas,
+            'f_remision' => $summary->f_remision,
+            'd_observacion' => $summary->d_observacion,
+            'created' => time(),
+            'createdby' => session()->get('userid')
+        ];
+
+        $builder->insert($new);
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            $ret = [
+                'code' => 'NOOK',
+                'message' => 'No se pudo insertar en la base de datos el detalle del sumario'
+            ];
+        }
+        else{
+            $ret = [
+                'summaryId' =>  $summary->id,
+                'code' => 'OK',
+                'message' => 'Se agregó nuevo sumario'
+            ];
+        }
+
+
+        return $ret;
+    }
 
     /**
      * Get summary from database by ID.

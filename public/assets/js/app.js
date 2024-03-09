@@ -57,6 +57,7 @@ const admin = {
                 $('.filter-list').change(function() {
                     $(this).closest('form').submit();
                 });
+
             },
         },
         form: {
@@ -82,10 +83,12 @@ const admin = {
                 });
 
                 // Mask money
-                $('.money').mask('000.000.000', {
+                $('.money').mask('000.000.000,00', {
                     reverse: true
                 });
-
+                $('.onlyinteger').mask('000.000.000', {
+                    reverse: true
+                });
                 // Mask slug
                 $('.onlyalphanumeric').mask('Z', {
                     translation: {
@@ -95,6 +98,7 @@ const admin = {
                         }
                     }
                 });
+
 
                 $.validator.addMethod("loginRegex", function(value, element) {
                     return this.optional(element) || /^[a-z0-9 \-]+$/i.test(value);
@@ -126,6 +130,9 @@ const admin = {
 
                 // Tooltip for help icon
                 $('[data-toggle="tooltip"]').tooltip();
+
+                $('.datepicker').datepicker();
+
             }
         }
     },
@@ -413,6 +420,87 @@ function saveUser(id){
                 'tipo_doc': tipo_doc,
                 'denominacion': denominacion,
                 'titular': titular
+            },
+            dataType: "json",
+            success: function(result){
+                $('#ajax_loader').hide();
+                if(result.code == 'OK'){
+                    $.alert({
+                        title: 'Información',
+                        content: result.message,
+                        escapeKey: 'cancel',
+                        draggable: false,
+                        closeIcon: true,
+                        type: 'green',
+                        backgroundDismiss: true,
+                        typeAnimated: true,
+                        animation: 'zoom',
+                        closeAnimation: 'zoom',
+                        animateFromElement: false
+                    });
+                }
+                else{
+                    $.alert({
+                        title: 'Error',
+                        content: result.message,
+                        escapeKey: 'cancel',
+                        draggable: false,
+                        closeIcon: true,
+                        type: 'red',
+                        backgroundDismiss: true,
+                        typeAnimated: true,
+                        animation: 'zoom',
+                        closeAnimation: 'zoom',
+                        animateFromElement: false
+                    });
+                }
+            }
+        });
+    }
+}
+
+function saveSummary(){
+    let validator = $( "#form-summary").validate();
+
+    $("#input-id-summary, #input-d_sumario, #input-d_origen, #input-d_destino,#input-d_tramite").each(function() {
+        $(this).rules("add", {
+            required: true,
+            messages: {
+                required: "Este campo es Obligatorio"
+            }
+        });
+    });
+    let valid = validator.form();
+    if(valid){
+
+        $('#ajax_loader').show();
+        let id_summary = $("#input-id-summary").val(),
+            d_sumario = $("#input-d_sumario").val(),
+            d_origen = $("#input-d_origen").val(),
+            d_destino = $("#input-d_destino").val(),
+            f_entrada = $("#input-f_entrada").val(),
+            d_tramite = $("#input-d_tramite").val(),
+            n_multa = $("#input-n_multa").val(),
+            d_disposicion = $("#input-d_disposicion").val(),
+            n_fojas = $("#input-n_fojas").val(),
+            f_remision = $("#input-f_remision").val(),
+            d_observacion = $("#input-d_observacion").val();
+
+        $.ajax({
+            type: "POST",
+            url: base_url+"/summaries/addSummary",
+            data: {
+                'id_summary': id_summary,
+                'd_sumario': d_sumario,
+                'd_origen': d_origen,
+                'd_destino': d_destino,
+                'f_entrada': f_entrada,
+                'd_tramite': d_tramite,
+                'n_multa': n_multa,
+                'd_disposicion': d_disposicion,
+                'n_fojas': n_fojas,
+                'f_remision': f_remision,
+                'd_observacion': d_observacion
             },
             dataType: "json",
             success: function(result){

@@ -25,12 +25,14 @@ $routes->get('admin/logout', [AdminController::class, 'logout']);
 $routes->get('admin/summaries', [SummariesController::class, 'index']);
 $routes->get('admin/summaries/(:num)/edit', [[SummariesController::class, 'buildEdit'], '$1']);
 $routes->post('admin/summaries/edit', [[SummariesController::class, 'processEdit'], '$1']);
+$routes->get('admin/summaries/create', [[SummariesController::class, 'buildCreate'], '$1']);
 $routes->post('admin/summaries/create', [[SummariesController::class, 'processCreate'], '$1']);
 $routes->post('admin/summaries/delete',  [[SummariesController::class, 'processDelete'], '$1']);
 
 /*ajax mostrar historico */
 $routes->post('admin/summaries/show_hist', [SummariesController::class, 'getHistory']);
 /* ajax formularios */
+$routes->post('admin/summaries/addSummary', [SummariesController::class, 'addSummary']);
 $routes->post('admin/summaries/adduser', [[SummariesController::class, 'ABMUserSumary'], 'add']);
 $routes->post('admin/summaries/updtUser', [[SummariesController::class, 'ABMUserSumary'], 'updt']);
 $routes->post('admin/summaries/delUser', [[SummariesController::class, 'ABMUserSumary'], 'del']);

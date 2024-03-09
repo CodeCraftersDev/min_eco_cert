@@ -28,7 +28,7 @@
                         </div>
                         <div class="card-tools">
                             <div class="float-right">
-                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-eco-primary disabled" disabled><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
+                                <a href="<?= base_url() ?>admin/summaries/create" class="btn btn-eco-primary" ><i class="fas fa-plus mr-1"></i> Cargar nuevo </a>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,7 @@
 namespace App\Controllers\Apps;
 
 use App\Controllers\BaseController;
+use App\Models\Summary;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class SummariesController extends BaseController {
@@ -47,6 +48,31 @@ class SummariesController extends BaseController {
         return view('apps/summaries', $this->viewdata);
     }
 
+
+    /**
+     * Show create summary form.
+     *
+     * @return void
+     */
+    public function buildCreate() {
+        $summary = new Summary();
+        $summary->id = $this->Summaries->addSummary();
+
+        if (!$summary->id)
+            show_404();
+
+        $summaryInvolved = $this->Summaries->getInvolved((int)$summary->id);
+
+        $this->viewdata['title'] = 'Sumario';
+        $this->viewdata['action'] = 'create';
+        $this->viewdata['section'] = 'summaries-form';
+        $this->viewdata['summary'] = $summary;
+        $this->viewdata['summaryInvolved'] = $summaryInvolved;
+
+
+        return view('apps/summaries-form', $this->viewdata);
+    }
+
     /**
      * Show edit summary form.
      *
@@ -63,6 +89,7 @@ class SummariesController extends BaseController {
 
         $this->viewdata['title'] = 'Sumario';
         $this->viewdata['section'] = 'summaries-form';
+        $this->viewdata['action'] = 'edit';
         $this->viewdata['summary'] = $summary;
         $this->viewdata['summaryInvolved'] = $summaryInvolved;
 
@@ -148,6 +175,25 @@ class SummariesController extends BaseController {
         $id = $this->request->getPost('id');
         $arrSumaries = $this->Summaries->getHistoryById($id);
         return $this->response->setJSON($arrSumaries)->setStatusCode(200);
+    }
+
+    public function addSummary(){
+        $summary = new Summary();
+        $summary->id = $this->request->getPost('id_summary');
+        $summary->d_sumario = $this->request->getPost('d_sumario');
+        $summary->d_origen = $this->request->getPost('d_origen');
+        $summary->d_destino = $this->request->getPost('d_destino');
+        $summary->f_entrada = $this->request->getPost('f_entrada');
+        $summary->d_tramite = $this->request->getPost('d_tramite');
+        $summary->n_multa = $this->request->getPost('n_multa');
+        $summary->d_disposicion = $this->request->getPost('d_disposicion');
+        $summary->n_fojas = $this->request->getPost('n_fojas');
+        $summary->f_remision = $this->request->getPost('f_remision');
+        $summary->d_observacion = $this->request->getPost('d_observacion');
+
+        $resp = $this->Summaries->editSummary($summary);
+
+        return $this->response->setJSON($resp)->setStatusCode(200);
     }
 
     public function ABMUserSumary($type){
