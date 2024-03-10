@@ -184,14 +184,16 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div  class="float-right" >
-                                <button
-                                        type="button"
-                                        style="margin-right: 10px"
-                                        class="btn btn-eco-primary"
-                                        onclick="saveSummary()">Guardar Sumario
-                                </button>
-                            </div>
+                            <?php if ($action == 'create'){ ?>
+                                <div  class="float-right" >
+                                    <button
+                                            type="button"
+                                            style="margin-right: 10px"
+                                            class="btn btn-eco-primary"
+                                            onclick="saveSummary()">Guardar Sumario
+                                    </button>
+                                </div>
+                             <?php } ?>
                 </div>
                 <!-- /.card -->
             </div>

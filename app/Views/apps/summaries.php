@@ -39,11 +39,12 @@
                                 <table class="table table-hover text-nowrap with-sortable" data-sort="communities">
                                     <thead>
                                     <tr>
-                                        <th> Nro. Sumario </th>
-                                        <th> Carátula </th>
-                                        <th> Disposición </th>
-                                        <th> Origen </th>
+                                        <th> Nro. Asunto </th>
+                                        <th> Sumario N° </th>
+                                        <th> Localidad </th>
                                         <th> Destino </th>
+                                        <th> Fecha Registro </th>
+                                        <th> Trámite </th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -53,9 +54,10 @@
                                             <tr id="<?= $summary->id ?>" >
                                                 <td><?= $summary->id ?></td>
                                                 <td><?= $summary->d_sumario ?></td>
-                                                <td><?= $summary->d_disposicion ?></td>
                                                 <td><?= $summary->d_origen ?></td>
                                                 <td><?= $summary->d_destino ?></td>
+                                                <td><?= $summary->f_entrada ?></td>
+                                                <td><?= $summary->d_tramite ?></td>
                                                 <td class="actions">
                                                     <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit"
                                                        class="edit btn">

@@ -517,7 +517,10 @@ function saveSummary(){
                         typeAnimated: true,
                         animation: 'zoom',
                         closeAnimation: 'zoom',
-                        animateFromElement: false
+                        animateFromElement: false,
+                        onClose: function () {
+                            window.location.href = base_url+'/summaries';
+                        }
                     });
                 }
                 else{

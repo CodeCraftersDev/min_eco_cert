@@ -43,7 +43,7 @@ class SumarioModel extends Model{
                 $data = [
                     'hash' => '',
                     'referencia' => $nombre.' '.$apellido.' DNI: '.$dni,
-                    'created' => time(),
+                    'created' => date('Y-m-d H:i:s'),
                     'createdby' => 'user-'.$dni
                 ];
                 $builder->insert($data);
@@ -71,7 +71,7 @@ class SumarioModel extends Model{
                 $data = [
                     'hash' => '',
                     'referencia' => $nombre.' '.$apellido.' DNI: '.$dni,
-                    'created' => time(),
+                    'created' => date('Y-m-d H:i:s'),
                     'createdby' => 'user-'.$dni
                 ];
                 $builder->insert($data);
@@ -109,7 +109,7 @@ class SumarioModel extends Model{
                         'ubicacion_actual' => $sum['d_destino'],
                         'estado_sumario' => ($sum['d_estado_multa'] == 'NO PAGADA')? 'En Tramite': 'Terminado',
                         'observaciones' => $sum['d_observacion'],
-                        'created' => time(),
+                        'created' => date('Y-m-d H:i:s'),
                         'createdby' => 'user-'.$dni
                     ];
                     $builderDet->insert($sumary_data);
@@ -166,7 +166,7 @@ class SumarioModel extends Model{
             'n_expte' => null,
             'f_inicio_expte' => null,
             'id_sysse' => null,
-            'created' => time(),
+            'created' => date('Y-m-d H:i:s'),
             'createdby' => session()->get('userid')
         ];
         $builder->insert($new);
@@ -187,10 +187,10 @@ class SumarioModel extends Model{
     public function editSummary($summary){
         $this->db->transStart();
         $builder = $this->db->table('sumarios st');
-        $builder->set('f_entrada', $summary->f_entrada);
+        $builder->set('f_entrada',date('Y-m-d', strtotime($summary->f_entrada)));
         $builder->set('d_sumario', $summary->d_sumario);
 
-        $builder->set('updated', time());
+        $builder->set('updated', date('Y-m-d H:i:s'));
         $builder->set('updatedby', session()->get('userid'));
         $builder->where('id', $summary->id);
         $builder->update();
@@ -212,9 +212,9 @@ class SumarioModel extends Model{
             'n_multa' => $summary->n_multa,
             'd_disposicion' => $summary->d_disposicion,
             'n_fojas' => $summary->n_fojas,
-            'f_remision' => $summary->f_remision,
+            'f_remision' => date('Y-m-d', strtotime($summary->f_remision)) ,
             'd_observacion' => $summary->d_observacion,
-            'created' => time(),
+            'created' => date('Y-m-d H:i:s'),
             'createdby' => session()->get('userid')
         ];
 
@@ -248,7 +248,7 @@ class SumarioModel extends Model{
         try {
 
             $builder = $this->db->table($this->sumario.' s');
-            $query =  $builder->select('s.id, s.d_sumario, s.f_entrada, s.n_expte, s.f_inicio_expte,  sd.*')
+            $query =  $builder->select('s.id, s.d_sumario, s.f_entrada, s.n_expte, s.f_inicio_expte,  sd.d_origen, sd.d_destino, sd.d_tramite, sd.n_multa, sd.d_disposicion, sd.n_fojas, sd.f_remision, sd.d_observacion')
                 ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
                 ->where('s.id', $id)
                 ->get();
@@ -321,7 +321,7 @@ class SumarioModel extends Model{
 
     private function getAllCount($count, $filter, $perPage, $offset){
         $builder = $this->db->table($this->sumario.' s');
-        $builder->select('s.id, s.d_sumario, sd.d_disposicion, sd.d_origen, sd.d_destino')
+        $builder->select('s.id, s.d_sumario,s.f_entrada , sd.d_disposicion, sd.d_origen, sd.d_destino, sd.d_tramite ')
             ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
             ->join($this->sumarioTitulares. ' st', 's.id = st.sumarios_id');
         if(is_array($filter) && !empty($filter)) {
@@ -373,7 +373,7 @@ class SumarioModel extends Model{
             'c_tipo' => null,
             'd_denominacion' => '',
             'c_ult_titular' => 'N',
-            'created' => time(),
+            'created' => date('Y-m-d H:i:s'),
             'createdby' => session()->get('userid')
         ];
         $builder->insert($data);
@@ -407,7 +407,7 @@ class SumarioModel extends Model{
         $builder->set('c_tipo', $tipo_doc);
         $builder->set('d_denominacion', $denom);
         $builder->set('c_ult_titular', $titular);
-        $builder->set('updated', time());
+        $builder->set('updated', date('Y-m-d H:i:s'));
         $builder->set('updatedby', session()->get('userid'));
         $builder->where('id', $id);
         $builder->update();
@@ -456,7 +456,7 @@ class SumarioModel extends Model{
         $this->db->transStart();
         $builder = $this->db->table('sumarios s');
         $builder->set('deleted', 'S');
-        $builder->set('updated', time());
+        $builder->set('updated', date('Y-m-d H:i:s'));
         $builder->set('updatedby', session()->get('userid'));
         $builder->where('id', $id);
         $builder->update();
