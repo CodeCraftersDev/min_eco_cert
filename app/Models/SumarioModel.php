@@ -5,7 +5,6 @@ use CodeIgniter\Model;
 class SumarioModel extends Model{
 
     protected $sumario = 'sumarios';
-    protected $sumarioDet = 'sumarios_detalle';
     protected $sumarioTitulares = 'sumarios_titulares';
 
     public function __construct(){
@@ -92,11 +91,8 @@ class SumarioModel extends Model{
                     $ids[]=$id_arr['id'];
                 }
 
-                $selectBuilder = $this->db->table('sumarios su');
-                $query = $selectBuilder->select('su.id, su.d_sumario, det.d_destino, det.d_estado_multa, det.d_observacion')
-                    ->join('sumarios_detalle det', 'su.id = det.sumarios_id')
-                    ->whereIn('su.id', $ids)
-                    ->get();
+                $selectBuilder = $this->db->table($this->sumario.' s');
+                $query = $selectBuilder->whereIn('s.id', $ids)->get();
 
                 $sumarios = $query->getResultArray();
 
@@ -159,13 +155,8 @@ class SumarioModel extends Model{
      */
     public function addSummary(){
         $this->db->transStart();
-        $builder = $this->db->table('sumarios s');
+        $builder = $this->db->table($this->sumario.' s');
         $new = [
-            'd_sumario' => null,
-            'f_entrada' => null,
-            'n_expte' => null,
-            'f_inicio_expte' => null,
-            'id_sysse' => null,
             'created' => date('Y-m-d H:i:s'),
             'createdby' => session()->get('userid')
         ];
@@ -186,40 +177,24 @@ class SumarioModel extends Model{
 
     public function editSummary($summary){
         $this->db->transStart();
-        $builder = $this->db->table('sumarios st');
+        $builder = $this->db->table($this->sumario.' s');
         $builder->set('f_entrada',date('Y-m-d', strtotime($summary->f_entrada)));
         $builder->set('d_sumario', $summary->d_sumario);
-
+        $builder->set('d_origen', $summary->d_origen);
+        $builder->set('d_destino', $summary->d_destino);
+        $builder->set('d_tramite', $summary->d_tramite);
+        $builder->set('n_multa', $summary->n_multa);
+        $builder->set('d_disposicion', $summary->d_disposicion);
+        $builder->set('n_fojas', $summary->n_fojas);
+        $builder->set('f_remision', date('Y-m-d', strtotime($summary->f_remision)));
+        $builder->set('d_observacion', $summary->d_observacion);
         $builder->set('updated', date('Y-m-d H:i:s'));
         $builder->set('updatedby', session()->get('userid'));
+
         $builder->where('id', $summary->id);
         $builder->update();
         $this->db->transComplete();
-        if ($this->db->transStatus() === false) {
-            return [
-                'code' => 'NOOK',
-                'message' => 'No se pudo guardar el sumario'
-            ];
-        }
 
-        $this->db->transStart();
-        $builder = $this->db->table('sumarios_detalle s');
-        $new = [
-            'sumarios_id' => $summary->id,
-            'd_origen' => $summary->d_origen,
-            'd_destino' => $summary->d_destino,
-            'd_tramite' => $summary->d_tramite,
-            'n_multa' => $summary->n_multa,
-            'd_disposicion' => $summary->d_disposicion,
-            'n_fojas' => $summary->n_fojas,
-            'f_remision' => date('Y-m-d', strtotime($summary->f_remision)) ,
-            'd_observacion' => $summary->d_observacion,
-            'created' => date('Y-m-d H:i:s'),
-            'createdby' => session()->get('userid')
-        ];
-
-        $builder->insert($new);
-        $this->db->transComplete();
         if ($this->db->transStatus() === false) {
             $ret = [
                 'code' => 'NOOK',
@@ -234,7 +209,6 @@ class SumarioModel extends Model{
             ];
         }
 
-
         return $ret;
     }
 
@@ -248,10 +222,7 @@ class SumarioModel extends Model{
         try {
 
             $builder = $this->db->table($this->sumario.' s');
-            $query =  $builder->select('s.id, s.d_sumario, s.f_entrada, s.n_expte, s.f_inicio_expte,  sd.d_origen, sd.d_destino, sd.d_tramite, sd.n_multa, sd.d_disposicion, sd.n_fojas, sd.f_remision, sd.d_observacion')
-                ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
-                ->where('s.id', $id)
-                ->get();
+            $query =  $builder->where('s.id', $id)->get();
 
             return $query->getRow();
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
@@ -269,9 +240,7 @@ class SumarioModel extends Model{
         try {
 
             $builder = $this->db->table($this->sumario.' s');
-            $query =  $builder->select('*')
-                ->where('s.id', $id)
-                ->get();
+            $query =  $builder->where('s.id', $id)->get();
 
             return $query->getRow();
         } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
@@ -321,21 +290,20 @@ class SumarioModel extends Model{
 
     private function getAllCount($count, $filter, $perPage, $offset){
         $builder = $this->db->table($this->sumario.' s');
-        $builder->select('s.id, s.d_sumario,s.f_entrada , sd.d_disposicion, sd.d_origen, sd.d_destino, sd.d_tramite ')
-            ->join($this->sumarioDet.' sd', 's.id = sd.sumarios_id')
-            ->join($this->sumarioTitulares. ' st', 's.id = st.sumarios_id');
+
         if(is_array($filter) && !empty($filter)) {
             if(isset($filter['search']) && !empty($filter['search'])) {
-                if($filter['type'] === 'name')
-                    $builder->like('st.d_denominacion', $filter['search']);
-                else
+                if($filter['type'] === 'name') {
+                    $subQuery = $this->db->table('sumarios_titulares st')->select('id')->where('st.d_denominacion', $filter['search']);
+                    $builder->whereIn('s.id', $subQuery, false);
+                }else
                     $builder->like('s.d_sumario', $filter['search']);
             }
         }
         // not deleted
         $builder->where('s.deleted', 'N');
 
-        $builder->groupBy(['s.id', 's.d_sumario', 'sd.d_disposicion', 'sd.d_origen', 'sd.d_destino']);
+        $builder->groupBy(['s.id', 's.d_sumario', 's.d_disposicion', 's.d_origen', 's.d_destino']);
 
         if($count == true){
             $query = $builder->countAllResults(false);
