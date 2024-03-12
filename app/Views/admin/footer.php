@@ -16,9 +16,9 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="<?=base_url('adminlte/plugins/jquery/')?>jquery.min.js"></script>
+<script src="<?=base_url('adminlte/plugins/jquery/jquery.min.js')?>"></script>
 <!-- jQuery UI 1.11.4 -->
-<script src="<?=base_url('adminlte/plugins/jquery-ui/')?>jquery-ui.min.js"></script>
+<script src="<?=base_url('adminlte/plugins/jquery-ui/jquery-ui.min.js')?>"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button);
@@ -43,7 +43,10 @@
 <script src="<?= base_url('adminlte/plugins/jquery-validation') ?>/additional-methods.min.js"></script>
 <!-- jQuery Mask -->
 <script src="<?= base_url('adminlte/plugins/jquery-mask') ?>/jquery.mask.min.js"></script>
-
+<script src="<?= base_url('adminlte/plugins/moment/moment.min.js') ?>"></script>
+<script src="<?= base_url('adminlte/plugins/moment/locale/es.js') ?>"></script>
+<script src="<?= base_url('adminlte/plugins/bootstrap/js/bootstrap.bundle.js') ?>"></script>
+<script src="<?= base_url('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js') ?>"></script>
 <!-- Custom JS App -->
 <script src="<?=base_url('assets/js/')?>app.js"></script>
 

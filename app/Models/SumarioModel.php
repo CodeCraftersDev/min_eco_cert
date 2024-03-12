@@ -178,7 +178,7 @@ class SumarioModel extends Model{
     public function editSummary($summary){
         $this->db->transStart();
         $builder = $this->db->table($this->sumario.' s');
-        $builder->set('f_entrada',date('Y-m-d', strtotime($summary->f_entrada)));
+        $builder->set('f_entrada',date('Y-m-d', strtotime(str_replace('/', '-', $summary->f_entrada))));
         $builder->set('d_sumario', $summary->d_sumario);
         $builder->set('d_origen', $summary->d_origen);
         $builder->set('d_destino', $summary->d_destino);
@@ -186,7 +186,7 @@ class SumarioModel extends Model{
         $builder->set('n_multa', $summary->n_multa);
         $builder->set('d_disposicion', $summary->d_disposicion);
         $builder->set('n_fojas', $summary->n_fojas);
-        $builder->set('f_remision', date('Y-m-d', strtotime($summary->f_remision)));
+        $builder->set('f_remision', date('Y-m-d', strtotime(str_replace('/', '-', $summary->f_remision))));
         $builder->set('d_observacion', $summary->d_observacion);
         $builder->set('updated', date('Y-m-d H:i:s'));
         $builder->set('updatedby', session()->get('userid'));

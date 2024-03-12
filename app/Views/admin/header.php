@@ -27,9 +27,9 @@
     <!-- Noty -->
     <link rel="stylesheet" href="<?= base_url('adminlte/plugins/noty/') ?>noty.css">
     <link rel="stylesheet" href="<?= base_url('adminlte/plugins/noty/') ?>themes/bootstrap-v4.css">
-
     <!-- Site style -->
     <link rel="stylesheet" href="<?=base_url('assets/css/')?>admin-styles.min.css?no-cache=<?=time()?>">
+    <link rel="stylesheet" href="<?=base_url('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.css')?>">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?= base_url('assets/img/') ?>favicon.jpg">

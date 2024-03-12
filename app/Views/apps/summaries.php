@@ -56,7 +56,7 @@
                                                 <td><?= $summary->d_sumario ?></td>
                                                 <td><?= $summary->d_origen ?></td>
                                                 <td><?= $summary->d_destino ?></td>
-                                                <td><?= $summary->f_entrada ?></td>
+                                                <td><?= trim(date('d/m/Y', strtotime($summary->f_entrada))) ?></td>
                                                 <td><?= $summary->d_tramite ?></td>
                                                 <td class="actions">
                                                     <a href="<?= base_url() ?>admin/summaries/<?= $summary->id ?>/edit"

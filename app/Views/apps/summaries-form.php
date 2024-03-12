@@ -55,7 +55,12 @@
                                                 <div class="col-md-2 ">
                                                     <div class="form-group">
                                                         <label for="input-f_entrada">Fecha Registro</label>
-                                                        <input type="text" name="f_entrada" class="form-control datepicker" id="input-f_entrada" value="<?= isset($summary->f_entrada) ? trim(date('d/m/Y', strtotime($summary->f_entrada))) : '' ?>"  <?= $action != 'create' ? 'disabled' : ''  ?>>
+                                                        <div class="input-group date" id="datetimepicker-f_entrada" data-target-input="nearest" disabled="">
+                                                            <input type="text" name="f_entrada" id="input-f_entrada" class="form-control datetimepicker-input" data-target="#datetimepicker-f_entrada"  value="<?= isset($summary->f_entrada) ? trim(date('d/m/Y', strtotime($summary->f_entrada))): '' ?>" <?= $action != 'create' ? 'disabled' : ''  ?>/>
+                                                            <div class="input-group-append" data-target="#datetimepicker-f_entrada" data-toggle="datetimepicker">
+                                                                <div class="input-group-text" ><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,7 +78,12 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="input-n_multa">Multa</label>
-                                                        <input type="text" name="n_multa" class="form-control money"  id="input-n_multa" value="<?= isset($summary->n_multa) ? trim($summary->n_multa) : '' ?>"  <?=  $action != 'create' ? 'disabled' : '' ?>>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text">$</span> <!-- Icon of money -->
+                                                            </div>
+                                                            <input type="text" name="n_multa" class="form-control money" id="input-n_multa" value="<?= isset($summary->n_multa) ? trim($summary->n_multa) : '' ?>" <?= $action != 'create' ? 'disabled' : '' ?>>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
@@ -91,7 +101,12 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group">
                                                         <label for="input-f_remision">Fecha de Remisión</label>
-                                                        <input type="text" name="f_remision" class="form-control datepicker" id="input-f_remision" value="<?= isset($summary->f_remision) ? trim(date('d/m/Y', strtotime($summary->f_remision))): '' ?>" maxlength="500"  <?= $action != 'create' ? 'disabled' : ''  ?>>
+                                                        <div class="input-group date" id="datetimepicker-f_remision" data-target-input="nearest" disabled="">
+                                                            <input type="text" name="f_remision" id="input-f_remision" class="form-control datetimepicker-input" data-target="#datetimepicker-f_remision"  value="<?= isset($summary->f_remision) ? trim(date('d/m/Y', strtotime($summary->f_remision))): '' ?>" <?= $action != 'create' ? 'disabled' : ''  ?>/>
+                                                            <div class="input-group-append" data-target="#datetimepicker-f_remision" data-toggle="datetimepicker">
+                                                                <div class="input-group-text" ><i class="fa fa-calendar"></i></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

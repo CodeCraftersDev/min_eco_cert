@@ -1,6 +1,6 @@
 const admin = {
     helpers: {
-        CleanPastedHTML: function(input) {
+        CleanPastedHTML: function (input) {
             var stringStripper = /(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g;
             var output = input.replace(stringStripper, ' ');
             var commentSripper = new RegExp('<!--(.*?)-->', 'g');
@@ -22,17 +22,17 @@ const admin = {
     },
     global: {
         nav: {
-            init: function() {
+            init: function () {
                 this.events();
             },
-            events: function() {
+            events: function () {
             }
         },
         list: {
-            init: function() {
+            init: function () {
                 this.events();
             },
-            events: function() {
+            events: function () {
                 let _this = this;
 
                 // Tooltip
@@ -54,21 +54,21 @@ const admin = {
                 });
 
                 // Change event for region filter
-                $('.filter-list').change(function() {
+                $('.filter-list').change(function () {
                     $(this).closest('form').submit();
                 });
 
             },
         },
         form: {
-            init: function() {
+            init: function () {
                 this.events();
             },
-            events: function() {
+            events: function () {
                 let _this = this;
 
                 // Select 2
-                $.each($('form .select2'), function(select) {
+                $.each($('form .select2'), function (select) {
                     let data = {
                         width: 'auto',
                         theme: 'bootstrap4'
@@ -78,7 +78,7 @@ const admin = {
                 })
 
                 // Bootstrap Switch
-                $("input[data-bootstrap-switch]").each(function() {
+                $("input[data-bootstrap-switch]").each(function () {
                     $(this).bootstrapSwitch('state', $(this).prop('checked'));
                 });
 
@@ -89,6 +89,8 @@ const admin = {
                 $('.onlyinteger').mask('000.000.000', {
                     reverse: true
                 });
+                $('.datetimepicker-input').mask('00/00/0000');
+
                 // Mask slug
                 $('.onlyalphanumeric').mask('Z', {
                     translation: {
@@ -100,13 +102,13 @@ const admin = {
                 });
 
 
-                $.validator.addMethod("loginRegex", function(value, element) {
+                $.validator.addMethod("loginRegex", function (value, element) {
                     return this.optional(element) || /^[a-z0-9 \-]+$/i.test(value);
                 }, "Ingresar únicamente letras y números.");
 
 
                 // Select all items in groups
-                $('form .groups .item .select-all input[type="checkbox"]').change(function() {
+                $('form .groups .item .select-all input[type="checkbox"]').change(function () {
                     var checked = $(this).prop('checked');
                     var inputs = $(this).closest('.item').find('.custom-check:not(.select-all) input[type="checkbox"]');
 
@@ -114,12 +116,12 @@ const admin = {
                 });
 
                 // Select / Unselect "select all" checkbox on item change.
-                $('form .groups .item .custom-check:not(.select-all) input[type="checkbox"]').change(function() {
+                $('form .groups .item .custom-check:not(.select-all) input[type="checkbox"]').change(function () {
                     var inputs = $(this).closest('.item').find('.custom-check:not(.select-all) input[type="checkbox"]');
                     var selectAll = $(this).closest('.item').find('.select-all input[type="checkbox"]');
                     var total = 0;
 
-                    $.each(inputs, function(i, input) {
+                    $.each(inputs, function (i, input) {
                         if ($(input).prop('checked')) {
                             total++;
                         }
@@ -131,22 +133,28 @@ const admin = {
                 // Tooltip for help icon
                 $('[data-toggle="tooltip"]').tooltip();
 
-                $('.datepicker').datepicker();
-
+                $('#datetimepicker-f_entrada').datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    locale: 'es'
+                });
+                $('#datetimepicker-f_remision').datetimepicker({
+                    format: 'DD/MM/YYYY',
+                    locale: 'es'
+                });
             }
         }
     },
     summaries: {
         list: {
-            init: function() {
+            init: function () {
                 let _this = this;
                 admin.global.list.init();
                 _this.events();
             },
-            events: function() {
+            events: function () {
 
                 // Remove action for summaries list
-                $(document).on('click', '#summaries-list .table button.remove', function(ev) {
+                $(document).on('click', '#summaries-list .table button.remove', function (ev) {
                     ev.preventDefault();
 
                     let $btn = $(this);
@@ -167,29 +175,29 @@ const admin = {
                         buttons: {
                             cancel: {
                                 text: 'Cancelar',
-                                action: function() {
+                                action: function () {
 
                                 }
                             },
                             confirm: {
                                 text: 'Confirmar',
                                 btnClass: 'btn btn-danger',
-                                action: function() {
+                                action: function () {
                                     $.ajax({
                                         url: base_url + '/summaries/delete',
                                         type: "POST",
                                         data: {
                                             id: id
                                         },
-                                        success: function(res) {
+                                        success: function (res) {
                                             if (res.code === 'OK') {
                                                 if ($('#summaries-list .table tbody tr').length == 1) {
-                                                    $('#summaries-list .table-container').slideUp(450, function() {
+                                                    $('#summaries-list .table-container').slideUp(450, function () {
                                                         $('.empty-results').slideDown(450);
                                                     });
                                                 }
 
-                                                $('#hist_'+id).remove();
+                                                $('#hist_' + id).remove();
 
                                                 $btn.closest('tr').animate({
                                                     height: 0
@@ -197,7 +205,7 @@ const admin = {
                                                 $btn.closest('tr').children('td').animate({
                                                     paddingTop: 0,
                                                     paddingBottom: 0
-                                                }).wrapInner('<div />').children().slideUp(function() {
+                                                }).wrapInner('<div />').children().slideUp(function () {
                                                     $(this).closest('tr').remove();
                                                 });
 
@@ -232,24 +240,23 @@ const admin = {
                     });
                 });
 
-                $(document).on('click', '#summaries-list .table button.show', function(ev) {
+                $(document).on('click', '#summaries-list .table button.show', function (ev) {
                     let sumaryID = $(this).attr('data-id');
-                    if($(this).hasClass('showed')){
-                        console.log('#hist_'+sumaryID);
-                        $('#hist_'+sumaryID).remove();
+                    if ($(this).hasClass('showed')) {
+                        console.log('#hist_' + sumaryID);
+                        $('#hist_' + sumaryID).remove();
                         $(this).removeClass('showed');
-                    }
-                    else{
+                    } else {
                         $(this).addClass('showed');
                         $('#ajax_loader').show();
                         $.ajax({
                             type: "POST",
-                            url: base_url+"/summaries/show_hist",
+                            url: base_url + "/summaries/show_hist",
                             data: {
                                 "id": sumaryID,
                             },
                             dataType: "json",
-                            success: function(result){
+                            success: function (result) {
                                 $('#ajax_loader').hide();
                                 showTable(sumaryID, result);
                             }
@@ -259,14 +266,14 @@ const admin = {
             }
         },
         form: {
-            init: function() {
+            init: function () {
                 let _this = this;
                 admin.global.form.init();
                 _this.events();
             },
-            events: function() {
+            events: function () {
 
-                $('#addUser').click(function (){
+                $('#addUser').click(function () {
                     let sumary_id = $('#id').val();
                     addBlankUser(sumary_id);
                 });
@@ -275,7 +282,7 @@ const admin = {
     }
 }
 
-function showTable(id, json){
+function showTable(id, json) {
     let tableHist = '<table width="100%"><thead><tr>' +
         '<th>Origen</th>' +
         '<th>destino</th>' +
@@ -284,50 +291,50 @@ function showTable(id, json){
         '<th>Estado</th>' +
         '<th>Fecha Emisión</th>' +
         '</tr></thead><tbody>';
-    $.each(json, function( index, data ) {
-        tableHist = tableHist+'<tr>' +
-            '<td>'+data.d_origen+'</td>'+
-            '<td>'+data.d_destino+'</td>'+
-            '<td>'+data.d_tramite+'</td>'+
-            '<td>'+data.n_fojas+'</td>'+
-            '<td>'+data.estado+'</td>'+
-            '<td>'+data.f_emision+'</td>'+
+    $.each(json, function (index, data) {
+        tableHist = tableHist + '<tr>' +
+            '<td>' + data.d_origen + '</td>' +
+            '<td>' + data.d_destino + '</td>' +
+            '<td>' + data.d_tramite + '</td>' +
+            '<td>' + data.n_fojas + '</td>' +
+            '<td>' + data.estado + '</td>' +
+            '<td>' + data.f_emision + '</td>' +
             '</tr>';
     });
     tableHist = tableHist + '</tbody></table>';
-    $('<tr id="hist_'+id+'" style="background-color: #CCCCCC;"><td colspan="6">'+tableHist+'</td></tr>').insertAfter('.table #'+id);
+    $('<tr id="hist_' + id + '" style="background-color: #CCCCCC;"><td colspan="6">' + tableHist + '</td></tr>').insertAfter('.table #' + id);
 }
 
-function addBlankUser(sumariId){
+function addBlankUser(sumariId) {
     $('#ajax_loader').show();
     $.ajax({
         type: "POST",
-        url: base_url+"/summaries/adduser",
+        url: base_url + "/summaries/adduser",
         data: {
             "id": sumariId,
         },
         dataType: "json",
-        success: function(result){
+        success: function (result) {
             $('#ajax_loader').hide();
-            if(result.code == 'OK'){
-                $('.users-list').append('<form id="userForm_'+result.userId+'">' +
+            if (result.code == 'OK') {
+                $('.users-list').append('<form id="userForm_' + result.userId + '">' +
                     '<div class="row user_form_block">' +
                     '<div class="col-md-4">' +
                     '    <div class="form-group">' +
-                    '        <label for="input-d_denominacion-'+result.userId+'">Denominación</label>' +
-                    '        <input type="text" name="d_denominacion-'+result.userId+'" class="form-control" id="input-d_denominacion-'+result.userId+'" value="">' +
+                    '        <label for="input-d_denominacion-' + result.userId + '">Denominación</label>' +
+                    '        <input type="text" name="d_denominacion-' + result.userId + '" class="form-control" id="input-d_denominacion-' + result.userId + '" value="">' +
                     '    </div>' +
                     '</div>' +
                     '<div class="col-md-2">' +
                     '    <div class="form-group">' +
-                    '        <label for="input-n_documento-'+result.userId+'">Documento Nro.</label>' +
-                    '        <input type="text" name="n_documento-'+result.userId+'" class="form-control" id="input-n_documento-'+result.userId+'" value="">' +
+                    '        <label for="input-n_documento-' + result.userId + '">Documento Nro.</label>' +
+                    '        <input type="text" name="n_documento-' + result.userId + '" class="form-control" id="input-n_documento-' + result.userId + '" value="">' +
                     '    </div>' +
                     '</div>' +
                     '<div class="col-md-2">' +
                     '    <div class="form-group">' +
-                    '        <label for="input-tipo-'+result.userId+'">Tipo Documento</label>' +
-                    '        <select name="tipo-doc-'+result.userId+'" class="form-control" id="input-tipo-doc-'+result.userId+'">' +
+                    '        <label for="input-tipo-' + result.userId + '">Tipo Documento</label>' +
+                    '        <select name="tipo-doc-' + result.userId + '" class="form-control" id="input-tipo-doc-' + result.userId + '">' +
                     '            <option value=""> Seleccione </option>' +
                     '            <option value="dni"> DNI </option>' +
                     '        </select>' +
@@ -335,8 +342,8 @@ function addBlankUser(sumariId){
                     '</div>' +
                     '<div class="col-md-2">' +
                     '    <div class="form-group">' +
-                    '        <label for="input-titular-'+result.userId+'">Titular</label>' +
-                    '        <select name="titular-'+result.userId+'" class="form-control" id="input-titular-'+result.userId+'">' +
+                    '        <label for="input-titular-' + result.userId + '">Titular</label>' +
+                    '        <select name="titular-' + result.userId + '" class="form-control" id="input-titular-' + result.userId + '">' +
                     '            <option value=""> Seleccione </option>' +
                     '            <option value="S"> SI </option>' +
                     '            <option value="N" selected> NO </option>' +
@@ -344,9 +351,9 @@ function addBlankUser(sumariId){
                     '    </div>' +
                     '</div>' +
                     '<div class="col-md-2" style="flex-direction: row; align-items: center; display: flex; padding-top: 10px;">' +
-                    '    <button type="button" style="margin-right: 10px" class="btn btn-eco-primary-outline" onclick="saveUser('+result.userId+')">Guardar' +
+                    '    <button type="button" style="margin-right: 10px" class="btn btn-eco-primary-outline" onclick="saveUser(' + result.userId + ')">Guardar' +
                     '    </button>' +
-                    '    <button type="button" class="btn btn-eco-danger-outline" onclick="deleteUser('+result.userId+')">Eliminar' +
+                    '    <button type="button" class="btn btn-eco-danger-outline" onclick="deleteUser(' + result.userId + ')">Eliminar' +
                     '    </button>' +
                     '</div>' +
                     '</div>' +
@@ -364,8 +371,7 @@ function addBlankUser(sumariId){
                     closeAnimation: 'zoom',
                     animateFromElement: false
                 });
-            }
-            else{
+            } else {
                 $.alert({
                     title: 'Error',
                     content: result.message,
@@ -384,17 +390,17 @@ function addBlankUser(sumariId){
     });
 }
 
-function saveUser(id){
-    let validator = $( "#userForm_"+id ).validate();
+function saveUser(id) {
+    let validator = $("#userForm_" + id).validate();
     //console.log($( "#userForm_"+id ));
-    $("#input-d_denominacion-"+id).rules("add", {
+    $("#input-d_denominacion-" + id).rules("add", {
         required: true,
         messages: {
             required: "Este campo es Obligatorio"
         }
     });
 
-    $("#input-n_documento-"+id).rules("add", {
+    $("#input-n_documento-" + id).rules("add", {
         required: true,
         messages: {
             required: "Este campo es Obligatorio",
@@ -402,17 +408,17 @@ function saveUser(id){
         }
     });
     let valid = validator.form();
-    if(valid){
+    if (valid) {
         $('#ajax_loader').show();
-        let denominacion = $("#input-d_denominacion-"+id).val();
-        let documento = $("#input-n_documento-"+id).val();
-        let tipo_doc = $("#input-tipo-doc-"+id).val();
-        let titular = $("#input-titular-"+id).val();
+        let denominacion = $("#input-d_denominacion-" + id).val();
+        let documento = $("#input-n_documento-" + id).val();
+        let tipo_doc = $("#input-tipo-doc-" + id).val();
+        let titular = $("#input-titular-" + id).val();
         let sumary_id = $('#id').val();
 
         $.ajax({
             type: "POST",
-            url: base_url+"/summaries/updtUser",
+            url: base_url + "/summaries/updtUser",
             data: {
                 'id': id,
                 'sumario_id': sumary_id,
@@ -422,9 +428,9 @@ function saveUser(id){
                 'titular': titular
             },
             dataType: "json",
-            success: function(result){
+            success: function (result) {
                 $('#ajax_loader').hide();
-                if(result.code == 'OK'){
+                if (result.code == 'OK') {
                     $.alert({
                         title: 'Información',
                         content: result.message,
@@ -438,8 +444,7 @@ function saveUser(id){
                         closeAnimation: 'zoom',
                         animateFromElement: false
                     });
-                }
-                else{
+                } else {
                     $.alert({
                         title: 'Error',
                         content: result.message,
@@ -459,10 +464,10 @@ function saveUser(id){
     }
 }
 
-function saveSummary(){
-    let validator = $( "#form-summary").validate();
+function saveSummary() {
+    let validator = $("#form-summary").validate();
 
-    $("#input-id-summary, #input-d_sumario, #input-d_origen, #input-d_destino,#input-d_tramite").each(function() {
+    $("#input-id-summary, #input-d_sumario, #input-d_origen, #input-d_destino,#input-d_tramite").each(function () {
         $(this).rules("add", {
             required: true,
             messages: {
@@ -471,7 +476,7 @@ function saveSummary(){
         });
     });
     let valid = validator.form();
-    if(valid){
+    if (valid) {
 
         $('#ajax_loader').show();
         let id_summary = $("#input-id-summary").val(),
@@ -488,7 +493,7 @@ function saveSummary(){
 
         $.ajax({
             type: "POST",
-            url: base_url+"/summaries/addSummary",
+            url: base_url + "/summaries/addSummary",
             data: {
                 'id_summary': id_summary,
                 'd_sumario': d_sumario,
@@ -503,9 +508,9 @@ function saveSummary(){
                 'd_observacion': d_observacion
             },
             dataType: "json",
-            success: function(result){
+            success: function (result) {
                 $('#ajax_loader').hide();
-                if(result.code == 'OK'){
+                if (result.code == 'OK') {
                     $.alert({
                         title: 'Información',
                         content: result.message,
@@ -519,11 +524,10 @@ function saveSummary(){
                         closeAnimation: 'zoom',
                         animateFromElement: false,
                         onClose: function () {
-                            window.location.href = base_url+'/summaries';
+                            window.location.href = base_url + '/summaries';
                         }
                     });
-                }
-                else{
+                } else {
                     $.alert({
                         title: 'Error',
                         content: result.message,
@@ -543,19 +547,19 @@ function saveSummary(){
     }
 }
 
-function deleteUser(id){
+function deleteUser(id) {
     $('#ajax_loader').show();
     $.ajax({
         type: "POST",
-        url: base_url+"/summaries/delUser",
+        url: base_url + "/summaries/delUser",
         data: {
             "id": id,
         },
         dataType: "json",
-        success: function(result){
+        success: function (result) {
             $('#ajax_loader').hide();
-            if(result.code == 'OK'){
-                $('#userForm_'+id).remove();
+            if (result.code == 'OK') {
+                $('#userForm_' + id).remove();
                 $.alert({
                     title: 'Información',
                     content: result.message,
@@ -569,8 +573,7 @@ function deleteUser(id){
                     closeAnimation: 'zoom',
                     animateFromElement: false
                 });
-            }
-            else{
+            } else {
                 $.alert({
                     title: 'Error',
                     content: result.message,
