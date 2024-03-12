@@ -294,7 +294,8 @@ class SumarioModel extends Model{
         if(is_array($filter) && !empty($filter)) {
             if(isset($filter['search']) && !empty($filter['search'])) {
                 if($filter['type'] === 'name') {
-                    $subQuery = $this->db->table('sumarios_titulares st')->select('id')->where('st.d_denominacion', $filter['search']);
+                    $denom = strtoupper($filter['search']);
+                    $subQuery = $this->db->table('sumarios_titulares st')->select('id')->like('upper(st.d_denominacion)', $denom);
                     $builder->whereIn('s.id', $subQuery, false);
                 }else
                     $builder->like('s.d_sumario', $filter['search']);

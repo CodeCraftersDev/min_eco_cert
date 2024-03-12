@@ -302,7 +302,7 @@ function showTable(id, json) {
             '</tr>';
     });
     tableHist = tableHist + '</tbody></table>';
-    $('<tr id="hist_' + id + '" style="background-color: #CCCCCC;"><td colspan="6">' + tableHist + '</td></tr>').insertAfter('.table #' + id);
+    $('<tr id="hist_' + id + '" style="background-color: #CCCCCC;"><td colspan="7">' + tableHist + '</td></tr>').insertAfter('.table #' + id);
 }
 
 function addBlankUser(sumariId) {
