@@ -402,6 +402,7 @@ function saveUser(id) {
 
     $("#input-n_documento-" + id).rules("add", {
         required: true,
+        number: true,
         messages: {
             required: "Este campo es Obligatorio",
             number: "Por favor ingresar solo números"

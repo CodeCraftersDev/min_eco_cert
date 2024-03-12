@@ -158,7 +158,7 @@ class SumarioModel extends Model{
         $builder = $this->db->table($this->sumario.' s');
         $new = [
             'created' => date('Y-m-d H:i:s'),
-            'createdby' => session()->get('userid')
+            'createdby' => session()->get('username')
         ];
         $builder->insert($new);
         $id = $this->db->insertID();
@@ -189,7 +189,7 @@ class SumarioModel extends Model{
         $builder->set('f_remision', date('Y-m-d', strtotime(str_replace('/', '-', $summary->f_remision))));
         $builder->set('d_observacion', $summary->d_observacion);
         $builder->set('updated', date('Y-m-d H:i:s'));
-        $builder->set('updatedby', session()->get('userid'));
+        $builder->set('updatedby', session()->get('username'));
 
         $builder->where('id', $summary->id);
         $builder->update();
@@ -342,7 +342,7 @@ class SumarioModel extends Model{
             'd_denominacion' => '',
             'c_ult_titular' => 'N',
             'created' => date('Y-m-d H:i:s'),
-            'createdby' => session()->get('userid')
+            'createdby' => session()->get('username')
         ];
         $builder->insert($data);
         $id = $this->db->insertID();
@@ -376,7 +376,7 @@ class SumarioModel extends Model{
         $builder->set('d_denominacion', $denom);
         $builder->set('c_ult_titular', $titular);
         $builder->set('updated', date('Y-m-d H:i:s'));
-        $builder->set('updatedby', session()->get('userid'));
+        $builder->set('updatedby', session()->get('username'));
         $builder->where('id', $id);
         $builder->update();
         $this->db->transComplete();
@@ -425,7 +425,7 @@ class SumarioModel extends Model{
         $builder = $this->db->table('sumarios s');
         $builder->set('deleted', 'S');
         $builder->set('updated', date('Y-m-d H:i:s'));
-        $builder->set('updatedby', session()->get('userid'));
+        $builder->set('updatedby', session()->get('username'));
         $builder->where('id', $id);
         $builder->update();
         $this->db->transComplete();
