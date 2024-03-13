@@ -358,19 +358,17 @@ function addBlankUser(sumariId) {
                     '</div>' +
                     '</div>' +
                     '</form>');
-                $.alert({
-                    title: 'Información',
-                    content: result.message,
-                    escapeKey: 'cancel',
-                    draggable: false,
-                    closeIcon: true,
-                    type: 'green',
-                    backgroundDismiss: true,
-                    typeAnimated: true,
-                    animation: 'zoom',
-                    closeAnimation: 'zoom',
-                    animateFromElement: false
-                });
+
+                // Show notification
+                new Noty({
+                    text: result.message,
+                    theme: 'bootstrap-v4',
+                    type: 'success',
+                    layout: 'bottomRight',
+                    timeout: 3000,
+                    closeWith: ['click', 'button']
+                }).show();
+
             } else {
                 $.alert({
                     title: 'Error',
@@ -432,19 +430,16 @@ function saveUser(id) {
             success: function (result) {
                 $('#ajax_loader').hide();
                 if (result.code == 'OK') {
-                    $.alert({
-                        title: 'Información',
-                        content: result.message,
-                        escapeKey: 'cancel',
-                        draggable: false,
-                        closeIcon: true,
-                        type: 'green',
-                        backgroundDismiss: true,
-                        typeAnimated: true,
-                        animation: 'zoom',
-                        closeAnimation: 'zoom',
-                        animateFromElement: false
-                    });
+                    // Show notification
+                    new Noty({
+                        text: result.message,
+                        theme: 'bootstrap-v4',
+                        type: 'success',
+                        layout: 'bottomRight',
+                        timeout: 3000,
+                        closeWith: ['click', 'button']
+                    }).show();
+
                 } else {
                     $.alert({
                         title: 'Error',
@@ -549,45 +544,62 @@ function saveSummary() {
 }
 
 function deleteUser(id) {
-    $('#ajax_loader').show();
-    $.ajax({
-        type: "POST",
-        url: base_url + "/summaries/delUser",
-        data: {
-            "id": id,
-        },
-        dataType: "json",
-        success: function (result) {
-            $('#ajax_loader').hide();
-            if (result.code == 'OK') {
-                $('#userForm_' + id).remove();
-                $.alert({
-                    title: 'Información',
-                    content: result.message,
-                    escapeKey: 'cancel',
-                    draggable: false,
-                    closeIcon: true,
-                    type: 'green',
-                    backgroundDismiss: true,
-                    typeAnimated: true,
-                    animation: 'zoom',
-                    closeAnimation: 'zoom',
-                    animateFromElement: false
-                });
-            } else {
-                $.alert({
-                    title: 'Error',
-                    content: result.message,
-                    escapeKey: 'cancel',
-                    draggable: false,
-                    closeIcon: true,
-                    type: 'red',
-                    backgroundDismiss: true,
-                    typeAnimated: true,
-                    animation: 'zoom',
-                    closeAnimation: 'zoom',
-                    animateFromElement: false
-                });
+
+    $.confirm({
+        title: 'Eliminar Interviniente',
+        content: '¿Confirma eliminar el registro?',
+        theme: 'modern',
+        type: 'red',
+        typeAnimated: true,
+        escapeKey: 'cancel',
+        closeIcon: true,
+        draggable: false,
+        closeAnimation: 'opacity',
+        backgroundDismiss: true,
+        buttons: {
+            cancel: {
+                text: 'Cancelar',
+                action: function () {}
+            },
+            confirm: {
+                text: 'Confirmar',
+                btnClass: 'btn btn-danger',
+                action: function () {
+                    $('#ajax_loader').show();
+                    $.ajax({
+                        type: "POST",
+                        url: base_url + "/summaries/delUser",
+                        data: {
+                            "id": id,
+                        },
+                        dataType: "json",
+                        success: function (result) {
+                            $('#ajax_loader').hide();
+                            if (result.code == 'OK') {
+                                $('#userForm_' + id).remove();
+                                // Show notification
+                                new Noty({
+                                    text: result.message,
+                                    theme: 'bootstrap-v4',
+                                    type: 'success',
+                                    layout: 'bottomRight',
+                                    timeout: 3000,
+                                    closeWith: ['click', 'button']
+                                }).show();
+
+                            } else {
+                                new Noty({
+                                    text: result.message,
+                                    theme: 'bootstrap-v4',
+                                    type: 'success',
+                                    layout: 'bottomRight',
+                                    timeout: 3000,
+                                    closeWith: ['click', 'button']
+                                }).show();
+                            }
+                        }
+                    });
+                }
             }
         }
     });
