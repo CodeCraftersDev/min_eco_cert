@@ -173,7 +173,7 @@
                     <div class="col-auto">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">Nombre</div>
+                                <div class="input-group-text" style="width: 85px;">Nombre</div>
                             </div>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
                         </div>
@@ -183,7 +183,7 @@
                     <div class="col-auto">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">Apellido</div>
+                                <div class="input-group-text" style="width: 85px;">Apellido</div>
                             </div>
                             <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" required>
                         </div>
@@ -193,7 +193,7 @@
                     <div class="col-auto">
                         <div class="input-group mb-2">
                             <div class="input-group-prepend">
-                                <div class="input-group-text">D.N.I.</div>
+                                <div class="input-group-text" style="width: 85px; padding-left: 1.3rem;">D.N.I.</div>
                             </div>
                             <input type="text" class="form-control" id="dni_number" name="dni_number" placeholder="Número de Documento" required>
                         </div>
