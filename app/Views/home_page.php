@@ -223,9 +223,9 @@
             <div class="footer-info">
                 <h3>Información</h3>
                 <ul>
-                    <li><a href="">+54 9 0376 4447593</a></li>
-                    <li><a href="">prensa@ecologia.misiones.gob.ar</a></li>
-                    <li>San Lorenzo 1538, Posadas, Misiones, Argentina</li>
+                    <li>+54 9 0376 4447593</li>
+                    <li><a href="mailto:prensa@ecologia.misiones.gob.ar">prensa@ecologia.misiones.gob.ar</a></li>
+                    <li><a href="https://goo.gl/maps/QYnSQHXdaFPoZVTh6" target="_blank">San Lorenzo 1538, Posadas, Misiones, Argentina</a></li>
                 </ul>
             </div>
         </div>
