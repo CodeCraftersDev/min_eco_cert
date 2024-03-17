@@ -128,3 +128,4 @@ nb-configuration.xml
 /.phpunit.*.cache
 
 public/.htaccess
+public/.htaccess

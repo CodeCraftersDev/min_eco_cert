@@ -10,7 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->post('/validatedni', 'Home::validatedni');
 $routes->get('/certificado/(:hash)', 'Certificados::certificado/$1');
-$routes->get('/validacert/(:hash)', 'Certificados::certificado/$1');
+$routes->get('/validarcert/(:hash)', 'Certificados::certificado/$1');
 
 //admin
 $routes->get('admin', [AdminController::class, 'index']);
