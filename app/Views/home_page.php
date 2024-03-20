@@ -163,9 +163,7 @@
     <div class="form-wrapper container">
         <div class="row text-eco">
             <h1>Ministerio de Ecología</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio a quia iusto quasi ullam fugiat
-                eum deserunt blanditiis assumenda, dolorem aliquam numquam neque harum voluptate consequatur esse in
-                laboriosam ipsum.</p>
+            <p>Ingresando tus datos se emitirá el de forma inmediata el Certificado de Antecedentes de Sumarios Ambientales. El mismo es un documento en formato electrónico emitido por el Ministerio de Ecología y RNR de la Provincia, que refleja la información del Registro de Infractores Ambientales.</p>
         </div>
         <div class="row form">
             <form id="formid" action="">
